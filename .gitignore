@@ -1,1 +1,17 @@
 *DS_Store
+bin/FreeImage.dll
+bin/Zlib.dll
+bin/assimp.dll
+bin/fmodex.dll
+bin/fmodexL.dll
+bin/freetype.dll
+bin/glut32.dll
+bin/libeay32.dll
+bin/ssleay32.dll
+bin/win_original_debug.exp
+bin/win_original_debug.ilk
+bin/win_original_debug.lib
+bin/win_original_debug.pdb
+icon.rc
+obj/
+win_original.VC.VC.opendb
