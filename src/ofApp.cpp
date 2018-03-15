@@ -53,7 +53,7 @@ void ofApp::setup(){
     quotes.resize(result.size());
     cout << "quotes "<< quotes.size()<<endl;
     ofTexture tex;
-    ofLoadImage(tex, "img/alphamask.png");
+    ofLoadImage(tex, "other/alphamask.png");
     
     for(int i = 0; i<quotes.size();i++){
         
