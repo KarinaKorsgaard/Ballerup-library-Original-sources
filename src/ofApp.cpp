@@ -344,14 +344,19 @@ void ofApp::readArduino(){
         bSendSerialMessage = false;
         readTime = ofGetElapsedTimef();
         
-        string fromArduino = string(bytesReadString);
-        char fa = fromArduino[0];
-        if(int(fa>15)){
-            input = ofToInt(fromArduino);
-            //cout << fa<<" "<<ofToInt(fromArduino)<<" "<<int(fa) << " bytes "<< nBytesRead << " time " << nTimesRead << endl;
-        }
+//        string fromArduino = string(bytesReadString);
+//        char fa = fromArduino[0];
+//        if(int(fa>15)){
+//            input = ofToInt(fromArduino);
+//            //cout << fa<<" "<<ofToInt(fromArduino)<<" "<<int(fa) << " bytes "<< nBytesRead << " time " << nTimesRead << endl;
+//        }
    // }
-    if(fromArduino!="")cout << fromArduino << endl;
+    //if(fromArduino!="")cout << fromArduino << endl;
+    string fromArduino = string(bytesReadString);
+    char fa = fromArduino[0]-'0';
+    input = fa;
+    
+    if(input>-1)cout <<"From Arduino "<< input << endl;
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
