@@ -15,3 +15,4 @@ bin/win_original_debug.pdb
 icon.rc
 obj/
 win_original.VC.VC.opendb
+bin/sumatrapdfcache/*
