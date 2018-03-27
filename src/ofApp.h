@@ -5,8 +5,8 @@
 #include "ofxPanel.h"
 
 #define SHUFFLE_BUTTON 1
-#define SLOT_W 800
-#define SLOT_H 100
+#define SLOT_W 1920-300
+#define SLOT_H 150
 
 
 struct Quote{
@@ -67,7 +67,7 @@ public:
 		
         if(!done){	
 			timers[eventNumber]+=ofGetLastFrameTime();
-            if(timers[eventNumber]>durations[eventNumber]){
+            if(timers[eventNumber]>=durations[eventNumber]+.3){
                 timers[eventNumber] = 0.0;
                 eventNumber++;
 				
@@ -181,10 +181,11 @@ class ofApp : public ofBaseApp{
 
     float ease(float time, float begin, float end, float duration) {
         end -=begin;
-        time /= duration;
-        if(time<duration)
-            return end*time*time + begin;
-        else return end;
+        
+		if (time > duration) return end+begin;
+		time /= duration;
+		return end*time*time + begin;
+        
     }
     
 
@@ -225,9 +226,9 @@ class ofApp : public ofBaseApp{
         
         ofSetColor(c);
 
-        int y = h/2 - MIN(l.size(),maxLines)*f.getLineHeight()/2;
+        int y = h/2 - (MIN(l.size(),maxLines)*f.getLineHeight())/2;
         
-        drawCollumn(l, h/2, y, f, maxLines);
+        drawCollumn(l, h/2, y*1.4, f, maxLines);
         fbo.end();
         
         ofBufferObject b;

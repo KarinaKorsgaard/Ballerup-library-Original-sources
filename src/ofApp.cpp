@@ -35,7 +35,7 @@ void ofApp::setup(){
     gui.loadFromFile("settings.xml");
     
     font.load("fonts"+slash+"bourton"+slash+"Bourton-Base-Drop.ttf", 30);
-    fontSmall.load("fonts"+slash+"bourton"+slash+"Bourton-Base-Drop.ttf", 20);
+    fontSmall.load("fonts"+slash+"bourton"+slash+"Bourton-Base-Drop.ttf", 30);
     
     
     std::string file = "speeches.json";
@@ -76,8 +76,8 @@ void ofApp::setup(){
             s->quotes[u].str = str;
             s->quotes[u].quoteID = u;
             s->quotes[u].speechID = i;
-            s->quotes[u].collumn = transformToCollumn((str), SLOT_W, fontSmall);
-            s->quotes[u].strTex = getStringAsTexture(ofColor(255), SLOT_W+SLOT_H, SLOT_H, s->quotes[u].collumn, fontSmall, 2);
+            s->quotes[u].collumn = transformToCollumn((str), SLOT_W-SLOT_H*2, fontSmall);
+            s->quotes[u].strTex = getStringAsTexture(ofColor(255), SLOT_W-SLOT_H, SLOT_H, s->quotes[u].collumn, fontSmall, 2);
         }
     }
     
@@ -95,7 +95,7 @@ void ofApp::setup(){
         slots.back().slotId = i;
         slots.back().isAnimated = false;
         slots.back().ypos = 20;
-        slots.back().fbo.allocate(SLOT_W+SLOT_H*3, SLOT_H, GL_RGBA);
+        slots.back().fbo.allocate(SLOT_W, SLOT_H, GL_RGBA);
     }
     
     
@@ -128,6 +128,8 @@ void ofApp::setup(){
     chainEvent.addEvent(3.0, RESET);
     
     chainEvent.setToEmpty(4);
+
+	debug = false;
     
 }
 
@@ -173,9 +175,11 @@ void ofApp::update(){
         ofSetColor(255);
         float emojiAspect = speeches[s].emoji.getHeight()/speeches[s].emoji.getWidth();
         speeches[s].emoji.draw(0,h/2-h*emojiScale/2,h*emojiScale,(h*emojiScale)*emojiAspect);
-        ofTranslate(h, 0);
-        ofSetColor(colors[slots[i].currentColor]);
-        roundedRect.draw(0, 0, SLOT_W+SLOT_H, SLOT_H);
+
+        ofTranslate(SLOT_H, 0);
+        
+		ofSetColor(colors[slots[i].currentColor]);
+        roundedRect.draw(0, 0, SLOT_W-SLOT_H, SLOT_H);
         ofSetColor(0);
         slots[i].quote->strTex.draw(0, slots[i].ypos);
         
@@ -185,9 +189,11 @@ void ofApp::update(){
         }
         
         ofTranslate(-h*0.4, 0);
+		int a = slots[i].isLocked ? 100 : 255;
         ofSetColor(255);
         speeches[s].face.draw(0, h/2-h*imageScale/2, w*imageScale, h*imageScale);
-        ofSetColor(colors[slots[i].currentColor]);
+		
+        ofSetColor(colors[slots[i].currentColor],a);
         roundCircle.draw(0, h/2-h*imageScale/2, h*imageScale, h*imageScale);
         slots[i].fbo.end();
         ofPopMatrix();
@@ -276,15 +282,21 @@ void ofApp::draw(){
     ofBackground(0);
     
     ofPushMatrix();
-    ofTranslate(40, 100);
+	if (debug)ofScale(0.5, 0.5);
+	int w = speeches[0].face.getWidth();
+	int h = slots[0].fbo.getHeight();
+	int spacingTop = 100;
+	int w_total = slots[0].fbo.getWidth();
+	float spacingH =(1080-spacingTop*2)/4;
+    
+	ofTranslate((1920/2)-(w_total/2), spacingTop);
+
     for(int i= 0; i<slots.size(); i++){
         int s = slots[i].quote->speechID;
-        int w = speeches[s].face.getWidth();
-        int h = speeches[s].face.getHeight();
-        int alpha = slots[i].isLocked ? 100: 255;
-        ofSetColor(255, alpha);
-        slots[i].fbo.draw(h * 1.2 + slots[i].xpos, 0);
-        ofTranslate(0,slots[i].fbo.getHeight()*1.2);
+        ofSetColor(255);
+        slots[i].fbo.draw(slots[i].xpos, 0);
+		//cout << slots[i].xpos << endl;
+        ofTranslate(0, spacingH);
     }
     ofPopMatrix();
     
