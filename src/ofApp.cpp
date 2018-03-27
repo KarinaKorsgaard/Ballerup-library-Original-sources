@@ -58,7 +58,8 @@ void ofApp::setup(){
     mask.load("other"+slash+"alphamask.png");
     mask.setImageType(OF_IMAGE_COLOR_ALPHA);
     mask.getPixels().setChannel(3, mask.getPixels().getChannel(0));
-    
+	SpeechGenerator sp;
+	sp.setup();
     for(int i = 0; i<speeches.size();i++){
         
         Speech* s = &speeches[i];
@@ -79,6 +80,7 @@ void ofApp::setup(){
             s->quotes[u].collumn = transformToCollumn((str), SLOT_W-SLOT_H*2, fontSmall);
             s->quotes[u].strTex = getStringAsTexture(ofColor(255), SLOT_W-SLOT_H, SLOT_H, s->quotes[u].collumn, fontSmall, 2);
         }
+		sp.generate(speeches[i], i);
     }
     
     for(int i=0; i<5; i++){
@@ -359,9 +361,13 @@ void ofApp::printSpeech(int s){
     if(!debug)system(command.c_str());
     
 #else
-    string command = "SumatraPDF.exe -print-to-default "+ cwd +"\\data\\speeches\\"+ speeches[s].name+".png";
+    string command = cwd+"\\bin\\SumatraPDF.exe -print-to-default -print-settings \"fit\" "+ cwd +"\\bin\\data\\generated\\"+ ofToString(s)+".png";
     if(debug)cout << command <<" "<< cwd << endl;
     if(!debug)system(command.c_str());
+
+
+
+	if (!debug)system(command.c_str());
     
 #endif
     
