@@ -145,11 +145,11 @@ void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     
-    
-    isInitialized = serial.isInitialized();
-    if(!isInitialized)initialiseArdiono();
-    else readArduino();
-    
+   if(!debug) {
+		isInitialized = serial.isInitialized();
+		if(!isInitialized)initialiseArdiono();
+		else readArduino();
+   }
     //while play
     if(input==SHUFFLE_BUTTON && chainEvent.getName()==EMPTY){
         randomizeSlots();
@@ -367,7 +367,7 @@ void ofApp::initialiseArdiono(){
 #ifdef __APPLE__
     serial.setup(0, baud); //open the first device
     cout << "on mac"<< endl;
-#elif
+#else
     serial.setup(0, baud); // windows example
     cout << "on windows"<< endl;
 #endif
@@ -440,11 +440,14 @@ void ofApp::readArduino(){
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+
     
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
+	if (key == 'd')debug = !debug;
+	ofSetFullscreen(!debug);
     
 }
 

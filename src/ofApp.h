@@ -56,30 +56,32 @@ public:
     vector<double> durations;
     vector<State> eventName;
     bool done = true;
-    
     int eventNumber = 0;
+
     void addEvent(double duration, State name){
         timers.push_back(0.0);
         durations.push_back(duration);
         eventName.push_back(name);
     }
     void update(){
-        
-        if(!done){
-            timers[eventNumber]+=ofGetLastFrameTime();
+		
+        if(!done){	
+			timers[eventNumber]+=ofGetLastFrameTime();
             if(timers[eventNumber]>durations[eventNumber]){
                 timers[eventNumber] = 0.0;
                 eventNumber++;
-            }
-            if(eventNumber > timers.size()){
-                eventNumber = 0;
-                done = true;
-                setToEmpty();
-            }
+				
+				if (eventNumber > timers.size() - 1) {
+					eventNumber = 0;
+					done = true;
+					setToEmpty();
+				}
+            }    
         }
     }
 
     void beginEvents(){
+		cout << "begin events" << endl;
         done = false;
         eventNumber = 0;
         for(int i = 0; i<timers.size();i++){
@@ -88,7 +90,10 @@ public:
     }
     
     void setToEmpty(int i = 0) {
-        if(i==0)done = true;
+        if(i==0) {
+			done = true;
+			eventNumber = 0;
+		}
         else {
             eventNumber = i;
             done = false;
