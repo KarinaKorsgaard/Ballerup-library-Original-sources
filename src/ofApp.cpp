@@ -271,6 +271,7 @@ void ofApp::update(){
                 slots[i].isLocked = false;
             }
             randomizeSlots();
+			printDone = false;
             break;
         }
         default:
@@ -355,6 +356,7 @@ void ofApp::randomizeSlots(bool different){
 //--------------------------------------------------------------
 void ofApp::printSpeech(int s){
     // print..
+	if(!printDone) {
     string cwd = ofFilePath::getCurrentWorkingDirectory();
     
 #ifdef __APPLE__
@@ -371,7 +373,8 @@ void ofApp::printSpeech(int s){
 	if (!debug)system(command.c_str());
     
 #endif
-    
+	printDone = true;
+}
 }
 
 //--------------------------------------------------------------
