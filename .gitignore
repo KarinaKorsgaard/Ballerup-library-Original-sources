@@ -1,10 +1,4 @@
 *DS_Store
-bin/FreeImage.dll
-bin/Zlib.dll
-bin/assimp.dll
-bin/fmodex.dll
-bin/fmodexL.dll
-bin/freetype.dll
 bin/glut32.dll
 bin/libeay32.dll
 bin/ssleay32.dll
