@@ -110,7 +110,7 @@ void ofApp::setup(){
 #else
     // run bat file to clear print q.
     string currentWork = ofFilePath::getCurrentWorkingDirectory();
-    string com = currentWork + "\\data\\clearShortCut.lnk";
+    string com = currentWork + "\\bin\\data\\clearShortCut.lnk";
     system(com.c_str());
     cout << "on windows "<< com << endl;
 #endif
