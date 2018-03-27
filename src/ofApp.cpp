@@ -2,186 +2,273 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    slash = "\\";
+    newLine = "\r\n";
+#ifdef __APPLE__
+    slash = "/";
+    newLine = "\n";
+#endif
+    
+    if(ofFile::doesFileExist(ofToDataPath("printNumberFile.txt"))) {
+        auto lines = ofSplitString(ofBufferFromFile("printNumberFile.txt").getText(), newLine);
+        printNumber = ofToInt(ofSplitString(lines.back()," ")[0]);
+    }else {
+        ofFile newFile(ofToDataPath("printNumberFile.txt"),ofFile::WriteOnly); //file doesn't exist yet
+        newFile.create(); // now file exists
+        newFile.open(ofToDataPath("printNumberFile.txt"),ofFile::WriteOnly);
+        newFile << "0 beginning" + newLine;
+        newFile.close();
+        printNumber = 0;
+    }
+    
+    ofLoadImage(roundedRect, "other"+slash+"roundRect.png");
+    ofLoadImage(roundCircle, "other"+slash+"circleOutline.png");
+    
+    ofSetVerticalSync(true);
+    ofEnableAntiAliasing();
+    ofEnableAlphaBlending();
+    
+    
     gui.setup();
     gui.add(animationTime.set("AnimationTime",1.,1.,5000.));
     gui.add(alphaTransitionTime.set("alphaTransitionTime",1.,100.,500.));
-    gui.add(scaleFace.set("scaleFace",0.1,0.,2.));
-    gui.add(facePos.set("facePos",ofVec2f(0,0),ofVec2f(0,0),ofVec2f(ofGetWidth(),ofGetHeight())));
-    
     gui.loadFromFile("settings.xml");
-
-    font.load("circular.ttf", 20);
-    fontSmall.load("circular.ttf", 15);
     
-    charHeight = font.getStringBoundingBox("Åg", 0, 0).height;
-    // json crap
-    std::string file = "example.json";
-    // Now parse the JSON
+    font.load("fonts"+slash+"bourton"+slash+"Bourton-Base-Drop.ttf", 30);
+    fontSmall.load("fonts"+slash+"bourton"+slash+"Bourton-Base-Drop.ttf", 20);
+    
+    
+    std::string file = "speeches.json";
     ofxJSONElement result;
     bool parsingSuccessful = result.open(file);
     if (parsingSuccessful) {
-        if (!result.save("example_output_pretty.json", true))
-            ofLogNotice("ofApp::setup") << "example_output_pretty.json written unsuccessfully.";
-        else
-            ofLogNotice("ofApp::setup") << "example_output_pretty.json written successfully.";
-        
-        if (!result.save("example_output_fast.json", false))
-            ofLogNotice("ofApp::setup") << "example_output_pretty.json written unsuccessfully.";
-        else ofLogNotice("ofApp::setup") << "example_output_pretty.json written successfully.";
+        ofLogNotice("ofApp::setup") << "example_output_pretty.json written successfully.";
     }
     else ofLogError("ofApp::setup")  << "Failed to parse JSON" << endl;
     
-    quotes.resize(result.size());
-    cout << "quotes "<< quotes.size()<<endl;
-    ofTexture tex;
-    ofLoadImage(tex, "other/alphamask.png");
+    colors.push_back(ofColor(255,206,0));
+    colors.push_back(ofColor(255,115,0));
+    colors.push_back(ofColor(255,0,170));
+    colors.push_back(ofColor(0,255,157));
+    colors.push_back(ofColor(118,0,255));
+    colors.push_back(ofColor(255));
     
-    vector<string>assets;
-    assets.push_back("nose");
+    speeches.resize(result.size());
+    ofImage mask;
+    mask.load("other"+slash+"alphamask.png");
+    mask.setImageType(OF_IMAGE_COLOR_ALPHA);
+    mask.getPixels().setChannel(3, mask.getPixels().getChannel(0));
     
-    assets.push_back("eyeLeft");
-    assets.push_back("eyeRight");
-    assets.push_back("mouthLower");
-    assets.push_back("mouthUpper");
-    
-    faceCoords.push_back(ofRectangle(0,344-278,124,200));
-    faceCoords.push_back(ofRectangle(faceCoords[0].x-100,0,184,120));
-    faceCoords.push_back(ofRectangle(faceCoords[0].x+100,0,184,120));
-    faceCoords.push_back(ofRectangle(0-20,549-278,276,133));
-    faceCoords.push_back(ofRectangle(0-20,449-278,276,153));
-    
-    
-    
-    
-    for(int i = 0; i<quotes.size();i++){
+    for(int i = 0; i<speeches.size();i++){
         
-        const Json::Value& q = result[i];
-        string str = q["quote"].asString();
+        Speech* s = &speeches[i];
         
-        int posy = charHeight/2 + font.getLineHeight()/2 - 5;
-        ofFbo fbo;
-        fbo.allocate(400, charHeight*2, GL_RGBA);
-        ofRectangle r = font.getStringBoundingBox(str, 0, 0);
-        int y = charHeight/2 - r.height/2 + font.getLineHeight()/2 + 3;
-        fbo.begin();
-        ofClear(0);
-        ofSetColor(255);
-        font.drawString(str, 30, y);
-        ofNoFill();
-        ofSetLineWidth(0.5);
-        fbo.end();
-        ofBufferObject buffer;
-        buffer.allocate(fbo.getWidth() * fbo.getHeight() * 4, GL_STATIC_DRAW);
-        fbo.getTexture().copyTo(buffer);
+        const Json::Value& json = result[i];
         
-        quotes[i].str = str;
-        quotes[i].tex.allocate(fbo.getWidth(), fbo.getHeight(), GL_RGBA);
-        quotes[i].tex.loadData(buffer, GL_RGBA, GL_UNSIGNED_BYTE);
-        quotes[i].img.load("img/"+q["imageName"].asString());
+        s->name = json["speech"].asString();
+        s->emoji = getResizedTexture("emojis"+slash+json["emoji"].asString(),SLOT_H,SLOT_H, mask);
+        s->face = getResizedTexture("faces"+slash+json["imageName"].asString(),SLOT_H,SLOT_H,mask, true);
+        s->speechId = i;
         
-        int w = quotes[i].img.getWidth();
-        int h = quotes[i].img.getHeight();
-        int tempH = tex.getHeight();
-        w = w * tempH/h;
-        quotes[i].img.resize(w,tempH);
-        quotes[i].img.getTexture().setAlphaMask(tex);
-        quotes[i].quoteID = i;
-        
-        quotes[i].face.resize(assets.size());
-        for(int u = 0; u<assets.size();u++){
-            string name =ofSplitString(q["imageName"].asString(), ".")[0];
-            string path = ofToDataPath("cutouts/"+name+"-"+assets[u]+".png");
-            if(ofFile::doesFileExist(path))
-               quotes[i].face[u].load(path);
-            else
-                quotes[i].face[u].load("cutouts/blank.png");
-        }    
+        s->quotes.resize(5);
+        for(int u = 0; u<5; u++){
+            string str = json["quote"+ofToString(u+1)].asString();
+            s->quotes[u].str = str;
+            s->quotes[u].quoteID = u;
+            s->quotes[u].speechID = i;
+            s->quotes[u].collumn = transformToCollumn((str), SLOT_W, fontSmall);
+            s->quotes[u].strTex = getStringAsTexture(ofColor(255), SLOT_W+SLOT_H, SLOT_H, s->quotes[u].collumn, fontSmall, 2);
+        }
     }
     
-    
-    for(int i=0; i<5;i++){
+    for(int i=0; i<5; i++){
         slot s;
         slots.push_back(s);
         
-        slots.back().quote = &quotes[int(ofRandom(quotes.size()))];
-        slots.back().new_quote = &quotes[int(ofRandom(quotes.size()))];
+        int sp = MIN(i,speeches.size()-1);
+        
+        slots.back().quote = &speeches[sp].quotes[i];
+        slots.back().new_quote =  &speeches[sp].quotes[i];
+        
+        slots.back().currentColor = sp;
+        //    slots.back().currentSpeech = sp;
+        slots.back().slotId = i;
         slots.back().isAnimated = false;
         slots.back().ypos = 20;
-        
+        slots.back().fbo.allocate(SLOT_W+SLOT_H*3, SLOT_H, GL_RGBA);
     }
+    
+    
+    int baud = 9600;
+#ifdef __APPLE__
+    system("cancel -a"); // clears print que
+    cout << "on mac"<< endl;
+#else
+    // run bat file to clear print q.
+    string cwd = ofFilePath::getCurrentWorkingDirectory();
+    string command = cwd + "\\data\\clearPrinter.bat";
+    system(command.c_str());
+    cout << "on windows"<< endl;
+#endif
+    /*
+     typedef enum {
+     HALT
+     WINNING_ANIMATION,
+     TRANSITION_OUT,
+     PRINT_AND_SHOW, // these can have any name you want, eg STATE_CLAP etc
+     TRANSITION_IN,
+     RESET,
+     } State;
+     */
+    chainEvent.addEvent(2.0, WINNING_HALT);
+    chainEvent.addEvent(3.0, WINNING_ANIMATION);
+    chainEvent.addEvent(2.0, TRANSITION_OUT);
+    chainEvent.addEvent(6.0, PRINT_AND_SHOW);
+    chainEvent.addEvent(2.0, TRANSITION_IN);
+    chainEvent.addEvent(3.0, RESET);
+    
+    chainEvent.setToEmpty(4);
+    
+}
+
+int ofApp::writeToFile(){
+    printNumber++;
+    ofFile newFile;
+    newFile.open(ofToDataPath("printNumberFile.txt"),ofFile::Append);
+    newFile <<newLine + ofToString(printNumber)+" "+ofGetTimestampString("%Y-%m-%d-%H");
+    newFile.close();
+    return printNumber;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
-    
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
+    
+    
     
     isInitialized = serial.isInitialized();
     if(!isInitialized)initialiseArdiono();
     else readArduino();
     
-    if(input!=-1){
-        if(input == 6){
-            doOutput();
-        }
-        else if (input<slots.size()){
-            
-            isDone = false;
-            if(!slots[input].isAnimated){
-                int temp = slots[input].quote->quoteID;
-                while(temp == slots[input].new_quote->quoteID)
-                    slots[input].new_quote = &quotes[int(ofRandom(quotes.size()))];
-            }
-        }
+    //while play
+    if(input==SHUFFLE_BUTTON && chainEvent.getName()==EMPTY){
+        randomizeSlots();
+        input = -1;
     }
     
-    
+   
     for(int i = 0; i<slots.size();i++){
-        animateSlots(&slots[i]);
-    }
-    
-    if(!isDone){
-        if(transitionAlpha>0)
-            transitionAlpha-=ofGetLastFrameTime()*alphaTransitionTime;
-    }
-    else if (isDone && slots[0].xpos<-ofGetWidth()){
-        if(transitionAlpha<254)
-            transitionAlpha+=ofGetLastFrameTime()*alphaTransitionTime;
-    }
-    
-}
-void ofApp::doOutput(){
-    if(!isDone){
-        finalSpeech.clear();
-        string temp = "";
-        for(int i = 0; i<slots.size();i++){
-            string str = slots[i].quote->str;
-            for(int u = 0; u<str.length();u++){
-                temp.append(str.substr(u,1));
-                
-                ofRectangle r = font.getStringBoundingBox(temp, 0, 0);
-                if(r.width>collumWidth && str.substr(u,1)==" "){
-                    finalSpeech.push_back(temp);
-                    cout<< finalSpeech.back()<<endl;
-                    temp = "";
-                }
-            }
-            if(i!=slots.size()-1)
-                temp.append(", ");
-            
-            //finalSpeech.push_back(temp);
-            //cout<< finalSpeech.back()<<endl;
+        animateSlots(&slots[i], i);
+        
+        ofPushMatrix();
+        int s = slots[i].quote->speechID;
+        int w = speeches[s].face.getWidth();
+        int h = speeches[s].face.getHeight();
+        int alpha = slots[i].isLocked ? 100: 255;
+        
+        float imageScale = 0.8;
+        float emojiScale = 0.45;
+        slots[i].fbo.begin();
+        ofClear(0);
+        ofSetColor(255);
+        float emojiAspect = speeches[s].emoji.getHeight()/speeches[s].emoji.getWidth();
+        speeches[s].emoji.draw(0,h/2-h*emojiScale/2,h*emojiScale,(h*emojiScale)*emojiAspect);
+        ofTranslate(h, 0);
+        ofSetColor(colors[slots[i].currentColor]);
+        roundedRect.draw(0, 0, SLOT_W+SLOT_H, SLOT_H);
+        ofSetColor(0);
+        slots[i].quote->strTex.draw(0, slots[i].ypos);
+        
+        if(slots[i].isAnimated){
+            Quote q = speeches[(s+1)%speeches.size()].quotes[i];
+            q.strTex.draw(0, q.strTex.getHeight() + slots[i].ypos);
         }
-        finalSpeech.push_back(temp);
-        finalSpeech.back().append(".");
         
-        
+        ofTranslate(-h*0.4, 0);
+        ofSetColor(255);
+        speeches[s].face.draw(0, h/2-h*imageScale/2, w*imageScale, h*imageScale);
+        ofSetColor(colors[slots[i].currentColor]);
+        roundCircle.draw(0, h/2-h*imageScale/2, h*imageScale, h*imageScale);
+        slots[i].fbo.end();
+        ofPopMatrix();
+    }
+
+    
+    int same = slots[0].quote->speechID;
+    for(int i = 0; i<slots.size();i++) {
+        int s = slots[i].quote->speechID;
+        if(same!=s) {
+            same = -1;
+        }
+    }
+    if(same!=-1) {
+        if(chainEvent.getName()==EMPTY)
+            chainEvent.beginEvents();
+    }
+    chainEvent.update();
+    
+    /*
+     typedef enum {
+     WINNING_HALT
+     WINNING_ANIMATION,
+     TRANSITION_OUT,
+     PRINT_AND_SHOW, // these can have any name you want, eg STATE_CLAP etc
+     TRANSITION_IN,
+     RESET,
+     } State;
+     */
+    switch (chainEvent.getName()) {
+        case WINNING_HALT: {
+            if(same == -1){
+                chainEvent.setToEmpty();
+            }
+            break;
+        }
+        case WINNING_ANIMATION: { // something something
+            finalSpeech.clear();
+            string temp = "";
+            for(int i = 0; i<slots.size();i++){
+                string str = slots[i].quote->str;
+                temp.append(str+" ");
+            }
+            finalSpeech = transformToCollumn(temp, 800, fontSmall);
+            serial.writeByte(9);
+            
+            break;
+        }
+        case TRANSITION_OUT: {
+            for(int i = 0; i<slots.size();i++) {
+                slots[i].xpos = ease(chainEvent.getTime(), 0.f, -SLOT_W*4.f, chainEvent.getDuration());
+            }
+            transitionAlpha = ease(chainEvent.getTime(), 0.f, 255.f, chainEvent.getDuration());
+            break;
+            
+        }
+        case PRINT_AND_SHOW: {
+            if(!debug)
+                printSpeech(slots[0].quote->speechID);
+            break;
+        }
+        case TRANSITION_IN: {
+            for(int i = 0; i<slots.size();i++) {
+                slots[i].xpos = ease(chainEvent.getTime(), -SLOT_W*4.f, 0.f, chainEvent.getDuration());
+            }
+            transitionAlpha = ease(chainEvent.getTime(), 255.f, 0.f, chainEvent.getDuration());
+            break;
+            
+        }
+        case RESET: {
+            for(int i = 0; i<slots.size();i++){
+                slots[i].isLocked = false;
+            }
+            randomizeSlots();
+            break;
+        }
+        default:
+            break;
     }
     
-    isDone = true;
 }
-
 
 //--------------------------------------------------------------
 void ofApp::draw(){
@@ -189,111 +276,85 @@ void ofApp::draw(){
     ofBackground(0);
     
     ofPushMatrix();
-    
     ofTranslate(40, 100);
-    int xpos_rect = charHeight * 3;
-    for(int i=0; i<slots.size();i++){
-
-        ofSetColor(255);
-        int w = slots[i].quote->img.getWidth();
-        int h = slots[i].quote->img.getHeight();
-        int tempH = charHeight*2;
-        w = w * tempH/h;
-        slots[i].quote->img.draw(slots[i].xpos + 0, 0, w, tempH);
-        
-        roundedRect(slots[i].xpos + xpos_rect , 0, 500, charHeight*2, charHeight);
-        
-        ofSetColor(0);
-        
-        slots[i].quote->tex.draw(slots[i].xpos + xpos_rect, slots[i].ypos);
-        if(slots[i].isAnimated){
-            Quote q = quotes[slots[i].quote->quoteID % quotes.size()];
-            q.tex.draw(slots[i].xpos + xpos_rect, q.tex.getHeight() + slots[i].ypos);
-        }
-        ofTranslate(0, charHeight*4);
+    for(int i= 0; i<slots.size(); i++){
+        int s = slots[i].quote->speechID;
+        int w = speeches[s].face.getWidth();
+        int h = speeches[s].face.getHeight();
+        int alpha = slots[i].isLocked ? 100: 255;
+        ofSetColor(255, alpha);
+        slots[i].fbo.draw(h * 1.2 + slots[i].xpos, 0);
+        ofTranslate(0,slots[i].fbo.getHeight()*1.2);
     }
     ofPopMatrix();
     
-    if(isDone){
-
-        ofSetColor(transitionAlpha);
-
-        int lineH = font.getLineHeight();
-        if(slots.back().xpos<-ofGetWidth()){
-            for(int i = 0; i<finalSpeech.size();i++)
-            font.drawString(finalSpeech[i], ofGetWidth()/2, (ofGetHeight()/2-finalSpeech.size()*lineH/2) + i*lineH);
-            drawFace();
+    switch (chainEvent.getName()) {
+        case WINNING_ANIMATION: {
+            ofSetColor(colors[slots[0].currentColor]);
+            ofDrawRectangle(0, ofGetHeight()-100, ease(chainEvent.getTime(), 0, ofGetWidth(), chainEvent.getDuration()), 100);
+            break;
         }
-
-        ofRectangle r = fontSmall.getStringBoundingBox("press print to print your speech,", 0, 0);
-        fontSmall.drawString("press print to print your speech,",ofGetWidth()/2-r.width/2,ofGetHeight()-100);
-        r = fontSmall.getStringBoundingBox("or press a button to restart!", 0, 0);
-        fontSmall.drawString("or press a button to restart!",ofGetWidth()/2-r.width/2,ofGetHeight()-70);
-        
-        
+        case TRANSITION_OUT: {
+            ofSetColor(colors[slots[0].currentColor]);
+            ofDrawRectangle(0, ofGetHeight()-100, ease(chainEvent.getTime(), ofGetWidth(), 0, chainEvent.getDuration()), 100);
+            break;
+        }
+        default:
+            break;
     }
     
-    gui.draw();
-}
-//--------------------------------------------------------------
-void ofApp::drawFace(){
-    ofPushMatrix();
-    ofTranslate(facePos->x, facePos->y);
-    ofScale(scaleFace, scaleFace);
-    
-    bool blink = ofRandom(2)<0.1;
-    if(blink)lowerMouth.y = sin(ofGetElapsedTimef()*10)*50;
-    lowerMouth.y = lowerMouth.y>0 ? 50:0;
 
-    for(int i = slots.size()-1; i>-1; i--){
-        ofImage img = slots[i].quote->face[i];
-        float a = img.getWidth()/img.getHeight();
-        
-        float h = faceCoords[i].height;
-        float w = h*a;
-        //if((i==1 || i==2)&&blink)h=0;
-        
-        float x = faceCoords[i].x;
-        float y = faceCoords[i].y;
-        if(i==3)y+=lowerMouth.y;
-        
-        img.draw(x,y,w,h);
+    
+    if(transitionAlpha>0){
+        ofSetColor(255,CLAMP(transitionAlpha,0,255));
+        drawCollumn(finalSpeech, 200, 200, fontSmall, 100);
     }
-    ofPopMatrix();
+    
+    if(debug)gui.draw();
 }
+
 //--------------------------------------------------------------
-void ofApp::animateSlots(slot * s){
-    if (!isDone){
-        //animate quote pos
-        if(s->quote->quoteID!=s->new_quote->quoteID) {
-            s->ypos -= ofGetLastFrameTime()*animationTime;
-            s->isAnimated = true;
-            if(s->ypos < -s->quote->tex.getHeight()){
-                s->ypos = 20;
-                s->quote=&quotes[(s->quote->quoteID+1) % quotes.size()];
+void ofApp::randomizeSlots(bool different){
+    for(int i = 0; i<slots.size();i++){
+        if(!slots[i].isAnimated && !slots[i].isLocked){
+            int temp = slots[i].quote->speechID;
+            if(different)temp = slots[MAX(i-1,0)].quote->speechID;
+            int random = temp;
+            while(temp == random){
+                random = ofRandom(speeches.size());
             }
-        } else {
-            s->isAnimated = false;
+            slots[i].new_quote = &speeches[random].quotes[i];
+            slots[i].colorIsSet = false;
+            // slots[i].currentSpeech = random;
         }
-        //animate back in
-        if(s->xpos<0) {
-            float t = ofGetElapsedTimef()-s->animateTime;
-            s->xpos = easeInOut_s(t, -ofGetWidth(), ofGetWidth(), 2, 1);
-        }else{
-            s->animateTime = ofGetElapsedTimef();
-        }
-        if(transitionAlpha>0)
-            transitionAlpha-=ofGetLastFrameTime();
     }
-    else {
-        if(s->xpos>-ofGetWidth()) {
-            float t = ofGetElapsedTimef()-s->animateTime;
-            s->xpos = easeInOut_s(t, 0 , -ofGetWidth(), 2, 1);
-        }else{
-            s->animateTime = ofGetElapsedTimef();
+    
+    for(int i = 0; i<slots.size();i++){
+        if(!slots[i].colorIsSet) {
+            slots[i].currentColor = getColor(&slots[i]);
+            slots[i].colorIsSet = true;
         }
     }
 }
+
+//--------------------------------------------------------------
+void ofApp::printSpeech(int s){
+    // print..
+    string cwd = ofFilePath::getCurrentWorkingDirectory();
+    
+#ifdef __APPLE__
+    string command = "lp "+ ofSplitString(cwd,"/bin")[0] + "/bin/data/speeches/"+ speeches[s].name+".png";
+    if(!debug)system(command.c_str());
+    
+#else
+    string command = "SumatraPDF.exe -print-to-default "+ cwd +"\\data\\speeches\\"+ speeches[s].name+".png";
+    if(debug)cout << command <<" "<< cwd << endl;
+    if(!debug)system(command.c_str());
+    
+#endif
+    
+}
+
 //--------------------------------------------------------------
 void ofApp::initialiseArdiono(){
     serial.listDevices();
@@ -307,7 +368,7 @@ void ofApp::initialiseArdiono(){
     serial.setup(0, baud); //open the first device
     cout << "on mac"<< endl;
 #elif
-    serial.setup("COM4", baud); // windows example
+    serial.setup(0, baud); // windows example
     cout << "on windows"<< endl;
 #endif
     //serial.setup("COM4", baud); // windows example
@@ -323,7 +384,8 @@ void ofApp::initialiseArdiono(){
     if(isInitialized)cout << "arduino is on"<<endl;
 }
 void ofApp::readArduino(){
-    input = -1;
+    
+    int tempInput = -1;
     nTimesRead = 0;
     nBytesRead = 0;
     int nRead  = 0;  // a temp variable to keep count per read
@@ -339,34 +401,46 @@ void ofApp::readArduino(){
     };
     
     //if(nBytesRead>0){
-        memcpy(bytesReadString, bytesReturned, 3);
-        
-        bSendSerialMessage = false;
-        readTime = ofGetElapsedTimef();
-        
-//        string fromArduino = string(bytesReadString);
-//        char fa = fromArduino[0];
-//        if(int(fa>15)){
-//            input = ofToInt(fromArduino);
-//            //cout << fa<<" "<<ofToInt(fromArduino)<<" "<<int(fa) << " bytes "<< nBytesRead << " time " << nTimesRead << endl;
-//        }
-   // }
-    //if(fromArduino!="")cout << fromArduino << endl;
+    memcpy(bytesReadString, bytesReturned, 3);
+    
+    bSendSerialMessage = false;
+    readTime = ofGetElapsedTimef();
+    
     string fromArduino = string(bytesReadString);
     char fa = fromArduino[0]-'0';
-    input = fa;
+    tempInput = fa;
     
-    if(input>-1)cout <<"From Arduino "<< input << endl;
+    if(tempInput>-1) {
+        
+        if(p_input!=tempInput){
+            p_input=tempInput;
+            input = tempInput;
+            cout <<"From Arduino "<< input << endl;
+        }
+    }
+    
+    if(debug){
+        if(ofGetMouseX()>ofGetWidth()-300 && ofGetMouseY()<300){
+            int tempInput = SHUFFLE_BUTTON;
+            if(p_input!=tempInput){
+                p_input=tempInput;
+                input = tempInput;
+                cout <<"From Arduino "<< input << endl;
+            }
+        }
+        else{
+            int tempInput = 0;
+            if(p_input!=tempInput){
+                p_input=tempInput;
+                input = tempInput;
+                cout <<"From Arduino "<< input << endl;
+            }
+        }
+    }
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if(key == 'd')doOutput();
     
-    if(key-'0'<slots.size()){
-       slots[key-'0'].quote = &quotes[int(ofRandom(quotes.size()))];
-        
-    }
-
 }
 
 //--------------------------------------------------------------
@@ -392,6 +466,26 @@ void ofApp::mousePressed(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     
+    int h = speeches[0].face.getHeight();
+    for(int i = 0; i<slots.size(); i++){
+        if(y-100>SLOT_H*1.2*i && y-100<SLOT_H*1.2*(i+1)){
+            slots[i].isLocked = !slots[i].isLocked;
+            break;
+        }
+    }
+}
+//--------------------------------------------------------------
+void ofApp::animateSlots(slot * s, int i){
+    if(s->quote->speechID!=s->new_quote->speechID) {
+        s->ypos -= ofGetLastFrameTime()*animationTime;
+        s->isAnimated = true;
+        if(s->ypos < - s->quote->strTex.getHeight()){
+            s->ypos = 20;
+            s->quote = &speeches[(s->quote->speechID + 1)%speeches.size()].quotes[s->slotId];
+        }
+    } else {
+        s->isAnimated = false;
+    }
 }
 
 //--------------------------------------------------------------
