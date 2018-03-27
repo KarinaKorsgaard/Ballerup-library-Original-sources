@@ -242,7 +242,7 @@ void ofApp::update(){
             }
             finalSpeech = transformToCollumn(temp, 800, fontSmall);
             serial.writeByte(9);
-            
+			printDone = false;
             break;
         }
         case TRANSITION_OUT: {
@@ -271,7 +271,6 @@ void ofApp::update(){
                 slots[i].isLocked = false;
             }
             randomizeSlots();
-			printDone = false;
             break;
         }
         default:
