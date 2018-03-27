@@ -108,10 +108,10 @@ void ofApp::setup(){
     cout << "on mac"<< endl;
 #else
     // run bat file to clear print q.
-    string cwd = ofFilePath::getCurrentWorkingDirectory();
-    string command = cwd + "\\bin\\data\\clearPrinter.bat";
-    system(command.c_str());
-    cout << "on windows "<<command<< endl;
+    string currentWork = ofFilePath::getCurrentWorkingDirectory();
+    string com = currentWork + "\\bin\\data\\clearPrinter.bat";
+    system(com.c_str());
+    cout << "on windows "<< com<< endl;
 #endif
     /*
      typedef enum {

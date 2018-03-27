@@ -104,14 +104,14 @@ public:
         ofSetColor(0);
         string strupper = ofToUpper(d.name);
         tidSted_f.drawString(d.speaker, 25*scale, 50*scale);
-        drawCollumn(transformToCollumn(strupper, fbo.getWidth()-50*scale, tidSted_f), 25 * scale, 90 * scale, tidSted_f);
+        drawCollumn(transformToCollumn(strupper, fbo.getWidth()-50*scale, tidSted_f), 25*scale, 90*scale, tidSted_f, 50);
         
 
 		string theSpeech = "";
         for(int u = 0; u<d.quotes.size();u++){
 			theSpeech.append(d.quotes[u].str);
         }
-		drawCollumn(transformToCollumn(theSpeech, fbo.getWidth()-50*scale, matb_f), 25 * scale, 210 * scale, matb_f);
+		drawCollumn(transformToCollumn(theSpeech, fbo.getWidth()-50*scale, matb_f), 25 * scale, 210 * scale, matb_f, 50);
 
         
         ofSetColor(255);
