@@ -108,7 +108,7 @@ void ofApp::setup(){
     string cwd = ofFilePath::getCurrentWorkingDirectory();
     string command = cwd + "\\data\\clearPrinter.bat";
     system(command.c_str());
-    cout << "on windows"<< endl;
+    cout << "on windows "<<command<< endl;
 #endif
     /*
      typedef enum {
