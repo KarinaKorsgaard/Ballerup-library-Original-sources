@@ -98,6 +98,7 @@ void ofApp::setup(){
         slots.back().slotId = i;
         slots.back().isAnimated = false;
         slots.back().ypos = 20;
+		slots.back().xpos = 0;
         slots.back().fbo.allocate(SLOT_W, SLOT_H, GL_RGBA);
     }
     
@@ -109,9 +110,9 @@ void ofApp::setup(){
 #else
     // run bat file to clear print q.
     string currentWork = ofFilePath::getCurrentWorkingDirectory();
-    string com = currentWork + "\\bin\\data\\clearShortCut.lnk";
+    string com = currentWork + "\\data\\clearShortCut.lnk";
     system(com.c_str());
-    cout << "on windows "<< com<< endl;
+    cout << "on windows "<< com << endl;
 #endif
     /*
      typedef enum {
@@ -130,7 +131,7 @@ void ofApp::setup(){
     chainEvent.addEvent(2.0, TRANSITION_IN);
     chainEvent.addEvent(3.0, RESET);
     
-    chainEvent.setToEmpty(4);
+    chainEvent.setToEmpty(5);
 
 	debug = false;
 	ofSetFullscreen(true);
@@ -231,9 +232,12 @@ void ofApp::update(){
             if(same == -1){
                 chainEvent.setToEmpty();
             }
+			//cout << "winning halt" << endl;
             break;
         }
         case WINNING_ANIMATION: { // something something
+			//cout << "winning anim" << endl;
+
             finalSpeech.clear();
             string temp = "";
             for(int i = 0; i<slots.size();i++){
@@ -246,6 +250,7 @@ void ofApp::update(){
             break;
         }
         case TRANSITION_OUT: {
+			//cout << "out " << endl;
             for(int i = 0; i<slots.size();i++) {
                 slots[i].xpos = ease(chainEvent.getTime(), 0.f, -SLOT_W*4.f, chainEvent.getDuration());
             }
@@ -254,11 +259,13 @@ void ofApp::update(){
             
         }
         case PRINT_AND_SHOW: {
+			//cout << "print and show" << endl;
             if(!debug)
                 printSpeech(slots[0].quote->speechID);
             break;
         }
         case TRANSITION_IN: {
+			//cout << "in" << endl;
             for(int i = 0; i<slots.size();i++) {
                 slots[i].xpos = ease(chainEvent.getTime(), -SLOT_W*4.f, 0.f, chainEvent.getDuration());
             }
@@ -267,6 +274,7 @@ void ofApp::update(){
             
         }
         case RESET: {
+			//cout << "reset" << endl;
             for(int i = 0; i<slots.size();i++){
                 slots[i].isLocked = false;
             }
