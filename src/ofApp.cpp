@@ -133,7 +133,7 @@ void ofApp::setup(){
     chainEvent.setToEmpty(4);
 
 	debug = false;
-    
+	ofSetFullscreen(true);
 }
 
 int ofApp::writeToFile(){
