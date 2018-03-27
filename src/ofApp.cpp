@@ -459,7 +459,7 @@ void ofApp::readArduino(){
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    input = SHUFFLE_BUTTON;
     
 }
 
