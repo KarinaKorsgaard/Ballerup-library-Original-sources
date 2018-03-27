@@ -12,7 +12,7 @@ void ofApp::setup(){
     if(ofFile::doesFileExist(ofToDataPath("printNumberFile.txt"))) {
         auto lines = ofSplitString(ofBufferFromFile("printNumberFile.txt").getText(), newLine);
         printNumber = ofToInt(ofSplitString(lines.back()," ")[0]);
-    }else {
+    } else {
         ofFile newFile(ofToDataPath("printNumberFile.txt"),ofFile::WriteOnly); //file doesn't exist yet
         newFile.create(); // now file exists
         newFile.open(ofToDataPath("printNumberFile.txt"),ofFile::WriteOnly);
@@ -287,7 +287,7 @@ void ofApp::draw(){
 	int h = slots[0].fbo.getHeight();
 	int spacingTop = 100;
 	int w_total = slots[0].fbo.getWidth();
-	float spacingH =(1080-spacingTop*2)/4;
+	float spacingH =(1080-spacingTop*2)/5;
     
 	ofTranslate((1920/2)-(w_total/2), spacingTop);
 
