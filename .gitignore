@@ -17,3 +17,4 @@ obj/
 win_original.VC.VC.opendb
 bin/sumatrapdfcache/*
 bin/data/printNumberFile.txt
+bin/data/generated/*

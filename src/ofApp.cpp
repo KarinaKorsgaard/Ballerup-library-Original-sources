@@ -70,6 +70,7 @@ void ofApp::setup(){
         s->emoji = getResizedTexture("emojis"+slash+json["emoji"].asString(),SLOT_H,SLOT_H, mask);
         s->face = getResizedTexture("faces"+slash+json["imageName"].asString(),SLOT_H,SLOT_H,mask, true);
         s->speechId = i;
+        s->speaker = json["speaker"].asString();
         
         s->quotes.resize(5);
         for(int u = 0; u<5; u++){

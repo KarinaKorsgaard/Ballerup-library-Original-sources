@@ -2,6 +2,7 @@
     {
 
         "speech": "I have a dream",
+        "speaker":"Martin Luther King",
         "imageName": "martin.jpg",
         "quote1":"I am happy to join with you today",
         "quote2":"in what will go down in history as the greatest demonstration for freedom in the history of our nation.",
@@ -14,6 +15,7 @@
     {
 
         "speech": "We Shall Fight on the Beaches",
+        "speaker":"Someone Else",
         "imageName": "winston.jpg",
         "quote1":"I have, myself, full confidence that if all do their duty, if nothing is neglected,",
         "quote2":"and if the best arrangements are made, as they are being made, we shall prove ourselves once again able to defend our Island home,",
@@ -26,6 +28,7 @@
     {
 
         "speech": "We Shall Fight on the Beaches",
+        "speaker":"Winston Churchill",
         "imageName": "nelson",
         "quote1":"I have, myself, full confidence that if all do their duty, if nothing is neglected,",
         "quote2":"and if the best arrangements are made, as they are being made, we shall prove ourselves once again able to defend our Island home,",

@@ -23,10 +23,10 @@ public:
     void setup(){
        // ofxSVG svg;
        // svg.load("bp_generator/boardingtemplate.svg");
-        tidSted_f.load("fonts/BergenMono/BergenMono-SemiBold.otf",25);
-        mat_f.load("fonts/BergenMono/BergenMono-SemiBold.otf",15);
-        matb_f.load("fonts/HaasGrotesk/NHaasGroteskDSPro-55Rg.otf",14);
-        number_f.load("fonts/BergenMono/BergenMono-Bold.otf",20);
+        tidSted_f.load("fonts/bourton/Bourton-Base.ttf",25);
+        mat_f.load("fonts/bourton/Bourton-Base-Drop.ttf",15);
+        matb_f.load("fonts/bourton/Bourton-Base-Drop.ttf",14);
+        number_f.load("fonts/bourton/Bourton-Base-Drop.ttf",20);
         
        // rects = getPolyline(svg);
 	   /*
@@ -67,7 +67,7 @@ public:
         ofEnableAntiAliasing();
         
         ofImage bg;
-        bg.load("other/background.png");
+        bg.load("other/background-01.png");
         int w = bg.getWidth();
         int h = bg.getHeight();
         
@@ -95,20 +95,23 @@ public:
         
         bg.draw(0,0,w,h);
         
-        ofSetColor(0);
+        
         ofTranslate(0, 18);
         int numL = 1;
-		d.face.draw(10, 10);
-		ofTranslate(d.face.getHeight());
+		d.face.draw(25, 10);
+		ofTranslate(0,d.face.getHeight());
+        
+        ofSetColor(0);
         string strupper = ofToUpper(d.name);
-        tidSted_f.drawString(strupper, 10*scale, 50*scale);
-        tidSted_f.drawString(d.speaker, 10*scale, 70*scale);
+        tidSted_f.drawString(d.speaker, 25*scale, 50*scale);
+        drawCollumn(transformToCollumn(strupper, fbo.getWidth()-50*scale, tidSted_f), 25 * scale, 90 * scale, tidSted_f);
+        
 
 		string theSpeech = "";
         for(int u = 0; u<d.quotes.size();u++){
 			theSpeech.append(d.quotes[u].str);
         }
-		drawCollumn(transformToCollumn(theSpeech), 10 * scale, 90 * scale);
+		drawCollumn(transformToCollumn(theSpeech, fbo.getWidth()-50*scale, matb_f), 25 * scale, 210 * scale, matb_f);
 
         
         ofSetColor(255);
@@ -128,7 +131,7 @@ public:
         fbores.end();
         
         fbores.readToPixels(pix);
-        ofSaveImage(pix, "generated\\"+ofToString(current)+".png", OF_IMAGE_QUALITY_BEST);
+        ofSaveImage(pix, "generated/"+ofToString(current)+".png", OF_IMAGE_QUALITY_BEST);
         return "latest.png";
     }
         /*
@@ -145,8 +148,8 @@ public:
         return polys;
     }
     */
-    vector<string> transformToCollumn(string str){
-        int w = layout["matb1"].width;
+    vector<string> transformToCollumn(string str, int w, ofTrueTypeFont f){
+       
         
         vector<string> result;
         string appending="";
@@ -158,7 +161,7 @@ public:
             }
             appending.append(c);
             
-            if(matb_f.stringWidth(appending) > w){
+            if(f.stringWidth(appending) > w){
                 // find last space
                 string thisLine;
                 string toNextLine;
@@ -176,14 +179,14 @@ public:
         return result;
     }
     
-    void drawCollumn(vector<string> s, int x, int y, int maxLine = 10 ){
+    void drawCollumn(vector<string> s, int x, int y, ofTrueTypeFont f,int maxLine = 10 ){
         
         if(maxLine<s.size()){
             s[maxLine-1].pop_back();
             s[maxLine-1].append("...");
         }
         for(int i = 0; i < MIN(s.size(),maxLine); i++){
-            matb_f.drawString(s[i], x, y+i*matb_f.getLineHeight() );
+            f.drawString(s[i], x, y+i*f.getLineHeight() );
         }
     }
     bool isSpace(unsigned int c){

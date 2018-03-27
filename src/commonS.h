@@ -4,14 +4,7 @@
 #define SLOT_W 1920-300
 #define SLOT_H 150
 
-struct Speech {
-	vector<Quote>quotes;
-	ofTexture emoji;
-	ofTexture face;
-	int speechId;
-	string name;
-	string speaker;
-};
+
 
 struct Quote {
 	ofTexture strTex;
@@ -19,6 +12,15 @@ struct Quote {
 	vector<string>collumn;
 	int quoteID;
 	int speechID;
+};
+
+struct Speech {
+    vector<Quote>quotes;
+    ofTexture emoji;
+    ofTexture face;
+    int speechId;
+    string name;
+    string speaker;
 };
 
 struct slot {
