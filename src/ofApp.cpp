@@ -106,7 +106,7 @@ void ofApp::setup(){
 #else
     // run bat file to clear print q.
     string cwd = ofFilePath::getCurrentWorkingDirectory();
-    string command = cwd + "\\data\\clearPrinter.bat";
+    string command = cwd + "\\bin\\data\\clearPrinter.bat";
     system(command.c_str());
     cout << "on windows "<<command<< endl;
 #endif
