@@ -71,6 +71,7 @@
 		9604B925D32EE39065747725 /* ofxBaseGui.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxBaseGui.cpp; path = ../../../addons/ofxGui/src/ofxBaseGui.cpp; sourceTree = SOURCE_ROOT; };
 		B6283779206A6EBB00B76528 /* speechGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = speechGenerator.h; sourceTree = "<group>"; };
 		B628377A206A6EBB00B76528 /* commonS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commonS.h; sourceTree = "<group>"; };
+		B659A1BB2074F976000994DD /* shader.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = shader.frag; path = bin/data/shader.frag; sourceTree = SOURCE_ROOT; };
 		B87C60311EC1FE841C1ECD89 /* ofxLabel.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxLabel.h; path = ../../../addons/ofxGui/src/ofxLabel.h; sourceTree = SOURCE_ROOT; };
 		C70D8946940288799E82131E /* ofxSliderGroup.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxSliderGroup.h; path = ../../../addons/ofxGui/src/ofxSliderGroup.h; sourceTree = SOURCE_ROOT; };
 		C88333E71C9457E441C33474 /* ofxButton.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxButton.cpp; path = ../../../addons/ofxGui/src/ofxButton.cpp; sourceTree = SOURCE_ROOT; };
@@ -229,6 +230,7 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				B628377A206A6EBB00B76528 /* commonS.h */,
 				B6283779206A6EBB00B76528 /* speechGenerator.h */,
+				B659A1BB2074F976000994DD /* shader.frag */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;

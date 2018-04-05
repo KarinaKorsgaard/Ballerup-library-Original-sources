@@ -21,11 +21,14 @@ struct Speech {
     int speechId;
     string name;
     string speaker;
+    string source;
+    string description;
 };
 
 struct slot {
 	Quote * quote;
 	Quote * new_quote;
+    Quote * p_quote;
 	bool isAnimated;
 	float ypos = 0.0;
 	float xpos = -SLOT_W*4.f;
@@ -35,7 +38,8 @@ struct slot {
 	int currentColor;
 	int slotId;
 	bool colorIsSet = true;
-
+    int colorNumber;
+    int p_colorNumber;
 
 };
 

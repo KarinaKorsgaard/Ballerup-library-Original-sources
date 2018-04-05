@@ -29,12 +29,9 @@ void ofApp::setup(){
     ofEnableAlphaBlending();
     
     
-    gui.setup();
-    gui.add(animationTime.set("AnimationTime",1.,1.,5000.));
-    gui.add(alphaTransitionTime.set("alphaTransitionTime",1.,100.,500.));
-    gui.loadFromFile("settings.xml");
     
-    font.load("fonts"+slash+"bourton"+slash+"Bourton-Base-Drop.ttf", 30);
+    
+    font.load("fonts"+slash+"bourton"+slash+"Bourton-Base.ttf", 30);
     fontSmall.load("fonts"+slash+"bourton"+slash+"Bourton-Base-Drop.ttf", 30);
     
     
@@ -51,14 +48,17 @@ void ofApp::setup(){
     colors.push_back(ofColor(255,0,170));
     colors.push_back(ofColor(0,255,157));
     colors.push_back(ofColor(118,0,255));
-    colors.push_back(ofColor(255));
+    //colors.push_back(ofColor(255));
     
     speeches.resize(result.size());
+    
+    ofDisableArbTex();
     ofImage mask;
     mask.load("other"+slash+"alphamask.png");
     mask.setImageType(OF_IMAGE_COLOR_ALPHA);
     mask.getPixels().setChannel(3, mask.getPixels().getChannel(0));
-	SpeechGenerator sp;
+    ofEnableArbTex();
+    
 	sp.setup();
     for(int i = 0; i<speeches.size();i++){
         
@@ -67,21 +67,41 @@ void ofApp::setup(){
         const Json::Value& json = result[i];
         
         s->name = json["speech"].asString();
-        s->emoji = getResizedTexture("emojis"+slash+json["emoji"].asString(),SLOT_H,SLOT_H, mask);
-        s->face = getResizedTexture("faces"+slash+json["imageName"].asString(),SLOT_H,SLOT_H,mask, true);
+        
+        ofDirectory dir;
+        dir.allowExt("png");
+        dir.listDir("emojis");
+        string emoji = "emojis"+slash+json["emoji"].asString();
+        if(!ofFile::doesFileExist(emoji))emoji.append(".png");
+        if(!ofFile::doesFileExist(emoji))emoji = dir.getPath(i%dir.size());
+        cout << emoji<< endl;
+        s->emoji = getResizedTexture(emoji,SLOT_H,SLOT_H, mask, false, false);
+        
+     
+        
+        string face = "faces"+slash+json["imageName"].asString();
+        string facejpg = face;
+        if(!ofFile::doesFileExist(face))face.append(".png");
+        if(!ofFile::doesFileExist(face))face = facejpg + ".jpg";
+        if(!ofFile::doesFileExist(face))face = "blank.png";
+        
+        s->face = getResizedTexture(face,SLOT_H,SLOT_H,mask, true);
+        s->source = json["source"].asString();
+        s->description = json["description"].asString();
         s->speechId = i;
-        s->speaker = json["speaker"].asString();
+        //s->speaker = json["speaker"].asString();
         
         s->quotes.resize(5);
         for(int u = 0; u<5; u++){
             string str = json["quote"+ofToString(u+1)].asString();
             s->quotes[u].str = str;
+            
             s->quotes[u].quoteID = u;
             s->quotes[u].speechID = i;
             s->quotes[u].collumn = transformToCollumn((str), SLOT_W-SLOT_H*2, fontSmall);
             s->quotes[u].strTex = getStringAsTexture(ofColor(255), SLOT_W-SLOT_H, SLOT_H, s->quotes[u].collumn, fontSmall, 2);
         }
-		sp.generate(speeches[i], i);
+		
     }
     
     for(int i=0; i<5; i++){
@@ -94,7 +114,7 @@ void ofApp::setup(){
         slots.back().new_quote =  &speeches[sp].quotes[i];
         
         slots.back().currentColor = sp;
-        //    slots.back().currentSpeech = sp;
+        //slots.back().currentSpeech = sp;
         slots.back().slotId = i;
         slots.back().isAnimated = false;
         slots.back().ypos = 20;
@@ -110,7 +130,7 @@ void ofApp::setup(){
 #else
     // run bat file to clear print q.
     string currentWork = ofFilePath::getCurrentWorkingDirectory();
-    string com = currentWork + "\\bin\\data\\clearShortCut.lnk";
+    string com = currentWork + "\\data\\clearShortCut.lnk";
     system(com.c_str());
     cout << "on windows "<< com << endl;
 #endif
@@ -119,48 +139,63 @@ void ofApp::setup(){
      HALT
      WINNING_ANIMATION,
      TRANSITION_OUT,
-     PRINT_AND_SHOW, // these can have any name you want, eg STATE_CLAP etc
+     SHOW_MOVIE, // these can have any name you want, eg STATE_CLAP etc
+     EMOJIS_IN,
+     TEXT_IN,
      TRANSITION_IN,
      RESET,
      } State;
      */
-    chainEvent.addEvent(2.0, WINNING_HALT);
-    chainEvent.addEvent(3.0, WINNING_ANIMATION);
-    chainEvent.addEvent(2.0, TRANSITION_OUT);
-    chainEvent.addEvent(6.0, PRINT_AND_SHOW);
+    chainEvent.addEvent(1.0, WINNING_HALT);
+    chainEvent.addEvent(.1, WINNING_ANIMATION);
+    chainEvent.addEvent(.5, TRANSITION_OUT);
+    //chainEvent.addEvent(1.0, SHOW_MOVIE);
+    chainEvent.addEvent(.5, EMOJIS_IN);
+    
+    chainEvent.addEvent(0.5, EMOJIS_OUT);
+    chainEvent.addEvent(1.0, TEXT_IN);
+    chainEvent.addEvent(3.0, PAUSE);
     chainEvent.addEvent(2.0, TRANSITION_IN);
     chainEvent.addEvent(3.0, RESET);
     
-    chainEvent.setToEmpty(5);
+    chainEvent.setToEmpty(8);
 
 	debug = false;
 	ofSetFullscreen(true);
+    
+    video.load("Jackpot_plate_2.mov");
+    
+    
+    
+    gui.setup();
+    gui.add(animationTime.set("AnimationTime",1.,.01,2.));
+    // gui.add(alphaTransitionTime.set("alphaTransitionTime",1.,100.,500.));
+    gui.add(easiness.set("easiness",.2,0.,1.1));
+    gui.add(jump.set("jump",1,1,speeches.size()));
+    gui.loadFromFile("settings.xml");
 }
 
-int ofApp::writeToFile(){
-    printNumber++;
-    ofFile newFile;
-    newFile.open(ofToDataPath("printNumberFile.txt"),ofFile::Append);
-    newFile <<newLine + ofToString(printNumber)+" "+ofGetTimestampString("%Y-%m-%d-%H");
-    newFile.close();
-    return printNumber;
-}
+
 
 //--------------------------------------------------------------
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     
-   if(!debug) {
+  // if(!debug) {
 		isInitialized = serial.isInitialized();
 		if(!isInitialized)initialiseArdiono();
 		else readArduino();
-   }
+  // }
     //while play
     if(input==SHUFFLE_BUTTON && chainEvent.getName()==EMPTY){
         randomizeSlots();
-        input = -1;
     }
+    if(input == 'a')slots[0].isLocked = !slots[0].isLocked;
+    if(input == 'b')slots[1].isLocked = !slots[1].isLocked;
+    if(input == 'c')slots[2].isLocked = !slots[2].isLocked;
+    if(input == 'd')slots[3].isLocked = !slots[3].isLocked;
+    if(input == 'e')slots[4].isLocked = !slots[4].isLocked;
     
    
     for(int i = 0; i<slots.size();i++){
@@ -178,27 +213,35 @@ void ofApp::update(){
         ofClear(0);
         ofSetColor(255);
         float emojiAspect = speeches[s].emoji.getHeight()/speeches[s].emoji.getWidth();
-        speeches[s].emoji.draw(0,h/2-h*emojiScale/2,h*emojiScale,(h*emojiScale)*emojiAspect);
+        speeches[s].emoji.draw(0,SLOT_H/2-MIN(h,w)*emojiScale/2,MIN(h,w)*emojiScale,MIN(h,w)*emojiScale*emojiAspect);
 
         ofTranslate(SLOT_H, 0);
-        
-		ofSetColor(colors[slots[i].currentColor]);
-        roundedRect.draw(0, 0, SLOT_W-SLOT_H, SLOT_H);
+        //s->ypos = ease(s->animateTime, 0, SLOT_H, animationTime);
+		ofSetColor(colors[slots[i].colorNumber]);
+        ofDrawRectangle(0, slots[i].ypos, SLOT_W-SLOT_H, SLOT_H);
         ofSetColor(0);
-        slots[i].quote->strTex.draw(0, slots[i].ypos);
+        slots[i].quote->strTex.draw(20, slots[i].ypos + SLOT_H*.1);
         
         if(slots[i].isAnimated){
-            Quote q = speeches[(s+1)%speeches.size()].quotes[i];
-            q.strTex.draw(0, q.strTex.getHeight() + slots[i].ypos);
+
+            ofSetColor(colors[slots[i].p_colorNumber]);
+            ofDrawRectangle(0, slots[i].ypos-SLOT_H, SLOT_W-SLOT_H, SLOT_H);
+            
+            ofSetColor(0);
+            slots[i].p_quote->strTex.draw(20, slots[i].ypos-SLOT_H+SLOT_H*.1);
         }
         
-        ofTranslate(-h*0.4, 0);
-		int a = slots[i].isLocked ? 100 : 255;
+        ofSetColor(0);
+        roundedRect.draw(-1, -1, SLOT_W-SLOT_H+2, SLOT_H+2);
+        ofTranslate(-SLOT_H*0.4, 0);
         ofSetColor(255);
-        speeches[s].face.draw(0, h/2-h*imageScale/2, w*imageScale, h*imageScale);
-		
-        ofSetColor(colors[slots[i].currentColor],a);
-        roundCircle.draw(0, h/2-h*imageScale/2, h*imageScale, h*imageScale);
+        speeches[s].face.draw(SLOT_H/2-SLOT_H*imageScale/2, SLOT_H/2-MIN(w,h)*imageScale/2, w*imageScale, h*imageScale);
+        ofSetColor(255);
+        
+        roundCircle.draw(SLOT_H/2-SLOT_H*imageScale/2, SLOT_H/2-SLOT_H*imageScale/2, SLOT_H*imageScale, SLOT_H*imageScale);
+        ofColor c = slots[i].isLocked ? ofColor::black : colors[slots[i].colorNumber];
+        ofSetColor(c);
+        roundCircle.draw(SLOT_H/2-SLOT_H*imageScale/2, SLOT_H/2-SLOT_H*imageScale/2, SLOT_H*imageScale, SLOT_H*imageScale);
         slots[i].fbo.end();
         ofPopMatrix();
     }
@@ -212,41 +255,43 @@ void ofApp::update(){
         }
     }
     if(same!=-1) {
-        if(chainEvent.getName()==EMPTY)
+        if(chainEvent.getName()==EMPTY){
             chainEvent.beginEvents();
+            serial.writeByte('b');
+            cout << "send b"<< endl;
+        }
     }
     chainEvent.update();
     
     /*
-     typedef enum {
-     WINNING_HALT
-     WINNING_ANIMATION,
-     TRANSITION_OUT,
-     PRINT_AND_SHOW, // these can have any name you want, eg STATE_CLAP etc
-     TRANSITION_IN,
-     RESET,
-     } State;
+     chainEvent.addEvent(1.0, WINNING_HALT);
+     chainEvent.addEvent(.1, WINNING_ANIMATION);
+     chainEvent.addEvent(1.0, TRANSITION_OUT);
+     chainEvent.addEvent(.5, EMOJIS_IN);
+     
+     chainEvent.addEvent(0.5, EMOJIS_OUT);
+     chainEvent.addEvent(1.0, TEXT_IN);
+     chainEvent.addEvent(3.0, PAUSE);
+     chainEvent.addEvent(2.0, TRANSITION_IN);
+     chainEvent.addEvent(3.0, RESET);
      */
     switch (chainEvent.getName()) {
         case WINNING_HALT: {
             if(same == -1){
                 chainEvent.setToEmpty();
+                serial.writeByte('s');
+                cout << "send stop"<< endl;
             }
 			//cout << "winning halt" << endl;
+            if(!debug)
+                createSpeech(slots[0].quote->speechID);
             break;
         }
         case WINNING_ANIMATION: { // something something
-			//cout << "winning anim" << endl;
-
-            finalSpeech.clear();
-            string temp = "";
-            for(int i = 0; i<slots.size();i++){
-                string str = slots[i].quote->str;
-                temp.append(str+" ");
-            }
-            finalSpeech = transformToCollumn(temp, 800, fontSmall);
-            serial.writeByte(9);
 			printDone = false;
+            finalSpeech = transformToCollumn(speeches[slots[0].quote->speechID].source,1920/2.7 ,font);
+            finalSpeech.push_back("");
+            finalSpeech.push_back("Din gevinst bliver printet nu");
             break;
         }
         case TRANSITION_OUT: {
@@ -254,37 +299,52 @@ void ofApp::update(){
             for(int i = 0; i<slots.size();i++) {
                 slots[i].xpos = ease(chainEvent.getTime(), 0.f, -SLOT_W*4.f, chainEvent.getDuration());
             }
-            transitionAlpha = ease(chainEvent.getTime(), 0.f, 255.f, chainEvent.getDuration());
+            if(!video.isPlaying()){
+                video.play();
+            }
+            video.update();
             break;
-            
         }
-        case PRINT_AND_SHOW: {
-			//cout << "print and show" << endl;
+       
+        case EMOJIS_IN:{
+            video.update();
+            break;
+        }
+        case EMOJIS_OUT:{
+            video.update();
+            break;
+        }
+        case TEXT_IN:{
             if(!debug)
                 printSpeech(slots[0].quote->speechID);
+            video.update();
             break;
         }
         case TRANSITION_IN: {
-			//cout << "in" << endl;
             for(int i = 0; i<slots.size();i++) {
                 slots[i].xpos = ease(chainEvent.getTime(), -SLOT_W*4.f, 0.f, chainEvent.getDuration());
             }
-            transitionAlpha = ease(chainEvent.getTime(), 255.f, 0.f, chainEvent.getDuration());
+            video.update();
             break;
-            
         }
+        case PAUSE:{
+            video.update();
+            break;
+        }
+        
         case RESET: {
+            if(video.isPlaying())video.stop();
 			//cout << "reset" << endl;
             for(int i = 0; i<slots.size();i++){
                 slots[i].isLocked = false;
             }
-            randomizeSlots();
+            randomizeSlots(true);
             break;
         }
         default:
             break;
     }
-    
+    input = -1;
 }
 
 //--------------------------------------------------------------
@@ -299,7 +359,7 @@ void ofApp::draw(){
 	int spacingTop = 100;
 	int w_total = slots[0].fbo.getWidth();
 	float spacingH =(1080-spacingTop*2)/5;
-    
+    ofPushMatrix();
 	ofTranslate((1920/2)-(w_total/2), spacingTop);
 
     for(int i= 0; i<slots.size(); i++){
@@ -310,28 +370,102 @@ void ofApp::draw(){
         ofTranslate(0, spacingH);
     }
     ofPopMatrix();
-    
+    /*
+     chainEvent.addEvent(2.0, WINNING_HALT);
+     chainEvent.addEvent(.5, WINNING_ANIMATION);
+     chainEvent.addEvent(2.0, TRANSITION_OUT);
+     chainEvent.addEvent(1.0, SHOW_MOVIE);
+     chainEvent.addEvent(.5, EMOJIS_IN);
+     PAUSE
+     chainEvent.addEvent(.5, EMOJIS_OUT);
+     chainEvent.addEvent(1.0, TEXT_IN);
+     chainEvent.addEvent(1.0, PAUSE);
+     chainEvent.addEvent(2.0, TRANSITION_IN);
+     chainEvent.addEvent(3.0, RESET);*/
     switch (chainEvent.getName()) {
         case WINNING_ANIMATION: {
             ofSetColor(colors[slots[0].currentColor]);
-            ofDrawRectangle(0, ofGetHeight()-100, ease(chainEvent.getTime(), 0, ofGetWidth(), chainEvent.getDuration()), 100);
+            ofDrawRectangle(0, ofGetHeight()-10, ease(chainEvent.getTime(), 0, ofGetWidth(), chainEvent.getDuration()), 10);
             break;
         }
         case TRANSITION_OUT: {
-            ofSetColor(colors[slots[0].currentColor]);
-            ofDrawRectangle(0, ofGetHeight()-100, ease(chainEvent.getTime(), ofGetWidth(), 0, chainEvent.getDuration()), 100);
+           // ofSetColor(colors[slots[0].currentColor]);
+           // ofDrawRectangle(0, ofGetHeight()-10, ease(chainEvent.getTime(), ofGetWidth(), 0, chainEvent.getDuration()), 10);
+            float alpha = ease(chainEvent.getTime()*5.,0,255,chainEvent.getDuration());
+            ofSetColor(255,alpha);
+            video.draw(0, 0, ofGetWidth(), ofGetHeight());
             break;
         }
+        case SHOW_MOVIE: {
+          //  float alpha = ease(chainEvent.getTime()*5.,0,255,chainEvent.getDuration());
+            ofSetColor(255);
+            video.draw(0, 0, ofGetWidth(), ofGetHeight());
+            break;
+        }
+        case EMOJIS_IN: {
+            ofSetColor(255);
+            video.draw(0, 0, ofGetWidth(), ofGetHeight());
+            Speech s = speeches[slots[0].quote->speechID];
+            int h = 100;
+            int w = h* s.emoji.getWidth()/s.emoji.getHeight();
+            for(int i = 0; i<5;i++){
+                float alpha = ease(chainEvent.getTime()*(5-i),0,255,chainEvent.getDuration());
+                alpha = MIN(alpha,255);
+                float y = ease(chainEvent.getTime()*(5-i),ofGetHeight()/2,ofGetHeight()/2-h/2,chainEvent.getDuration());
+                ofSetColor(255,alpha);
+                int x = ofGetWidth()/2-(5*w*1.5)/2 + i*w*1.5;
+                s.emoji.draw(x,y,w,h);
+            }
+            break;
+        }
+            
+        case EMOJIS_OUT: {
+            ofSetColor(255);
+            video.draw(0, 0, ofGetWidth(), ofGetHeight());
+            Speech s = speeches[slots[0].quote->speechID];
+            int h = 100;
+            int w = h* s.emoji.getWidth()/s.emoji.getHeight();
+            for(int i = 0; i<5;i++){
+                float scale = ease(chainEvent.getTime(),1,0,chainEvent.getDuration());
+                int x = ofGetWidth()/2-(5*w*1.5)/2 + i*w*1.5 + (1-scale)*w/2;
+                s.emoji.draw(x,ofGetHeight()/2-(h*scale)/2,w*scale,h*scale);
+                
+            }
+            break;
+        }
+        
+        case TEXT_IN: {
+            ofSetColor(255);
+            video.draw(0, 0, ofGetWidth(), ofGetHeight());
+            ofSetColor(0);
+            float y = ease(chainEvent.getTime(),ofGetHeight(),ofGetHeight()-font.getLineHeight()*5,chainEvent.getDuration()/5.);
+            sp.drawCollumn(finalSpeech, ofGetWidth()/2, y, font);
+            break;
+        }
+        case PAUSE:{
+            ofSetColor(255);
+            video.draw(0, 0, ofGetWidth(), ofGetHeight());
+            ofSetColor(0);
+            sp.drawCollumn(finalSpeech, ofGetWidth()/2, ofGetHeight()-font.getLineHeight()*5, font);
+            break;
+        }
+        case TRANSITION_IN: {
+            
+            float alpha = ease(chainEvent.getTime(),255,0,chainEvent.getDuration());
+            ofSetColor(255,alpha);
+            video.draw(0, 0, ofGetWidth(), ofGetHeight());
+            ofSetColor(0,alpha);
+            sp.drawCollumn(finalSpeech, ofGetWidth()/2, ofGetHeight()-font.getLineHeight()*5, font);
+            break;
+        }
+       
         default:
             break;
     }
     
-
+    ofPopMatrix();
     
-    if(transitionAlpha>0){
-        ofSetColor(255,CLAMP(transitionAlpha,0,255));
-        drawCollumn(finalSpeech, 200, 200, fontSmall, 100);
-    }
+
     
     if(debug)gui.draw();
 }
@@ -346,6 +480,7 @@ void ofApp::randomizeSlots(bool different){
             while(temp == random){
                 random = ofRandom(speeches.size());
             }
+            if(ofRandom(1)>easiness && !different)random = i==0 ? slots.back().quote->speechID : slots[(i-1)%slots.size()].quote->speechID;
             slots[i].new_quote = &speeches[random].quotes[i];
             slots[i].colorIsSet = false;
             // slots[i].currentSpeech = random;
@@ -359,25 +494,29 @@ void ofApp::randomizeSlots(bool different){
         }
     }
 }
-
+void ofApp::createSpeech(int s){
+    latestFile = sp.generate(speeches[s], s);
+}
 //--------------------------------------------------------------
 void ofApp::printSpeech(int s){
     // print..
-	if(!printDone) {
-    string cwd = ofFilePath::getCurrentWorkingDirectory();
-    
+    if(!printDone) {
+        string file = latestFile;
+        
+        string cwd = ofFilePath::getCurrentWorkingDirectory();
+        
 #ifdef __APPLE__
-    string command = "lp "+ ofSplitString(cwd,"/bin")[0] + "/bin/data/speeches/"+ speeches[s].name+".png";
-    if(!debug)system(command.c_str());
-    
+        string command = "lp "+ ofSplitString(cwd,"/bin")[0] + "/bin/data/generated/"+ file;
+        if(!debug)system(command.c_str());
+        
 #else
-    string command = cwd+"\\bin\\SumatraPDF.exe -print-to-default -print-settings \"fit\" "+ cwd +"\\bin\\data\\generated\\"+ ofToString(s)+".png";
-    if(debug)cout << command <<" "<< cwd << endl;
-    if(!debug)system(command.c_str());
-    
+        string command = cwd+"\\SumatraPDF.exe -print-to-default -print-settings \"fit\" "+ cwd +"\\data\\generated\\"+ file;
+        if(debug)cout << command <<" "<< cwd << endl;
+        if(!debug)system(command.c_str());
+        
 #endif
-	printDone = true;
-}
+        printDone = true;
+    }
 }
 
 //--------------------------------------------------------------
@@ -393,7 +532,7 @@ void ofApp::initialiseArdiono(){
     serial.setup(0, baud); //open the first device
     cout << "on mac"<< endl;
 #else
-    serial.setup(0, baud); // windows example
+    serial.setup("COM3", baud); // windows example
     cout << "on windows"<< endl;
 #endif
     //serial.setup("COM4", baud); // windows example
@@ -432,19 +571,21 @@ void ofApp::readArduino(){
     readTime = ofGetElapsedTimef();
     
     string fromArduino = string(bytesReadString);
-    char fa = fromArduino[0]-'0';
+    char fa = fromArduino[0];
     tempInput = fa;
     
-    if(tempInput>-1) {
-        
-        if(p_input!=tempInput){
+    if(tempInput>-1 && tempInput!=0) {
+        input = tempInput;
+        cout <<"From Arduino "<< input << endl;
+        /*if(p_input!=tempInput || tempInput == SHUFFLE_BUTTON){
             p_input=tempInput;
             input = tempInput;
             cout <<"From Arduino "<< input << endl;
         }
+         */
     }
     
-    if(debug){
+    /*if(debug){
         if(ofGetMouseX()>ofGetWidth()-300 && ofGetMouseY()<300){
             int tempInput = SHUFFLE_BUTTON;
             if(p_input!=tempInput){
@@ -461,18 +602,35 @@ void ofApp::readArduino(){
                 cout <<"From Arduino "<< input << endl;
             }
         }
-    }
+    }*/
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    input = SHUFFLE_BUTTON;
     
+    if(key == 'w'){
+        for(int i = 0; i<slots.size();i++){
+            slots[i].new_quote = &speeches[0].quotes[i];
+            slots[i].colorIsSet = false;
+            // slots[i].currentSpeech = random;
+        }
+
+        for(int i = 0; i<slots.size();i++){
+            if(!slots[i].colorIsSet) {
+                slots[i].currentColor = getColor(&slots[i]);
+                slots[i].colorIsSet = true;
+            }
+        }
+    }
+    else if(debug)input = SHUFFLE_BUTTON;
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-	if (key == 'd')debug = !debug;
+    if(debug && key == 'p'){printSpeech(0);printDone=false;}
+    if (key == 'd')debug = !debug;
 	ofSetFullscreen(!debug);
+    
+    
     
 }
 
@@ -493,10 +651,10 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    
+    float scale = debug ? 0.5 :1.;
     int h = speeches[0].face.getHeight();
     for(int i = 0; i<slots.size(); i++){
-        if(y-100>SLOT_H*1.2*i && y-100<SLOT_H*1.2*(i+1)){
+        if(y-100*scale>SLOT_H*scale*1.2*i && y-100*scale<SLOT_H*scale*1.2*(i+1)){
             slots[i].isLocked = !slots[i].isLocked;
             break;
         }
@@ -504,15 +662,51 @@ void ofApp::mouseReleased(int x, int y, int button){
 }
 //--------------------------------------------------------------
 void ofApp::animateSlots(slot * s, int i){
-    if(s->quote->speechID!=s->new_quote->speechID) {
-        s->ypos -= ofGetLastFrameTime()*animationTime;
+    int currentSpeech = s->quote->speechID;
+    int newSpeech = s->new_quote->speechID;
+    
+    if(currentSpeech!=newSpeech) {
+        
+        s->animateTime+=ofGetLastFrameTime();
+        s->ypos = ease(s->animateTime, 0, SLOT_H, animationTime);
         s->isAnimated = true;
-        if(s->ypos < - s->quote->strTex.getHeight()){
-            s->ypos = 20;
-            s->quote = &speeches[(s->quote->speechID + 1)%speeches.size()].quotes[s->slotId];
+        
+        if(s->animateTime>animationTime){
+            
+            s->animateTime = 0.0;
+            int dist_to_next;
+            if(currentSpeech <= newSpeech) {
+                dist_to_next = newSpeech - currentSpeech;
+            }
+            else {
+                dist_to_next = (speeches.size() - currentSpeech) + newSpeech;
+            }
+            jumpDistance = MIN(jump.get(), dist_to_next);
+            
+            s->quote = &speeches[(currentSpeech + jumpDistance)%speeches.size()].quotes[s->slotId];
+            s->colorNumber = (dist_to_next-jumpDistance + s->currentColor)%colors.size();
+            
+            currentSpeech = s->quote->speechID;
+            
+            if(currentSpeech <= newSpeech) {
+                dist_to_next = newSpeech - currentSpeech;
+            }
+            else {
+                dist_to_next = (speeches.size() - currentSpeech) + newSpeech;
+            }
+            jumpDistance = MIN(jump.get(), dist_to_next);
+
+            s->p_quote = &speeches[(currentSpeech + jumpDistance)%speeches.size()].quotes[s->slotId];
+            s->p_colorNumber = (dist_to_next-jumpDistance + s->currentColor)%colors.size();
+            
+            s->ypos = ease(s->animateTime, 0, SLOT_H, animationTime);
+            //s->ypos = ease(s->animateTime, 0, SLOT_H, animationTime);
+            //s->ypos = ease(s->animateTime, SLOT_H, 0, animationTime);
         }
+    
     } else {
         s->isAnimated = false;
+        //s->ypos = SLOT_H;
     }
 }
 

@@ -1,0 +1,41 @@
+[
+    {
+
+        "speech": "I have a dream",
+        "speaker":"Martin Luther King",
+        "imageName": "martin.jpg",
+        "quote1":"I am happy to join with you today",
+        "quote2":"in what will go down in history as the greatest demonstration for freedom in the history of our nation.",
+        "quote3":"Five score years ago, a great American, in whose symbolic shadow we stand today, signed the Emancipation Proclamation.",
+        "quote4":"This momentous decree came as a great beacon light of hope to millions of Negro slaves who had been seared in the flames of withering injustice.",
+        "quote5":"It came as a joyous daybreak to end the long night of their captivity.",
+        "emoji":"cloud"
+
+    },
+    {
+
+        "speech": "We Shall Fight on the Beaches",
+        "speaker":"Someone Else",
+        "imageName": "winston.jpg",
+        "quote1":"I have, myself, full confidence that if all do their duty, if nothing is neglected,",
+        "quote2":"and if the best arrangements are made, as they are being made, we shall prove ourselves once again able to defend our Island home,",
+        "quote3":"to ride out the storm of war, and to outlive the menace of tyranny, if necessary for years, if necessary alone.",
+        "quote4":"At any rate, that is what we are going to try to do. That is the resolve of His Majesty’s Government-every man of them.",
+        "quote5":"That is the will of Parliament and the nation.",
+        "emoji":"fire"
+
+    },
+    {
+
+        "speech": "We Shall Fight on the Beaches",
+        "speaker":"Winston Churchill",
+        "imageName": "nelson",
+        "quote1":"I have, myself, full confidence that if all do their duty, if nothing is neglected,",
+        "quote2":"and if the best arrangements are made, as they are being made, we shall prove ourselves once again able to defend our Island home,",
+        "quote3":"to ride out the storm of war, and to outlive the menace of tyranny, if necessary for years, if necessary alone.",
+        "quote4":"At any rate, that is what we are going to try to do. That is the resolve of His Majesty’s Government-every man of them.",
+        "quote5":"That is the will of Parliament and the nation.",
+        "emoji":"fire"
+
+    }
+]

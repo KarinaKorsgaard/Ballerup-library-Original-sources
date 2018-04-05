@@ -5,7 +5,7 @@
 #include "ofxPanel.h"
 #include "speechGenerator.h"
 
-#define SHUFFLE_BUTTON 1
+#define SHUFFLE_BUTTON 114
 #define SLOT_W 1920-300
 #define SLOT_H 150
 
@@ -15,7 +15,11 @@ typedef enum {
     WINNING_HALT,
     WINNING_ANIMATION,
     TRANSITION_OUT,
-    PRINT_AND_SHOW, // these can have any name you want, eg STATE_CLAP etc
+    SHOW_MOVIE, // these can have any name you want, eg STATE_CLAP etc
+    EMOJIS_IN,
+    PAUSE,
+    EMOJIS_OUT,
+    TEXT_IN,
     TRANSITION_IN,
     RESET,
     EMPTY
@@ -129,11 +133,15 @@ class ofApp : public ofBaseApp{
 
     ofxPanel gui;
     ofParameter<float>animationTime;
+    ofParameter<float>easiness;
+    ofParameter<int>jump;
     ofParameter<float>alphaTransitionTime;
 
     ChainEvent chainEvent;
     float transitionAlpha;
     
+    int jumpDistance;
+    void drawSlots();
     bool        bSendSerialMessage;            // a flag for sending serial
     char        bytesRead[3];                // data from serial, we will be trying to read 3
     char        bytesReadString[4];            // a string needs a null terminator, so we need 3 + 1 bytes
@@ -146,9 +154,9 @@ class ofApp : public ofBaseApp{
     int input = 0;
     int p_input = 0; 
     ofSerial    serial;
-
+SpeechGenerator sp;
     
-    
+    ofVideoPlayer video;
 
     float ease(float time, float begin, float end, float duration) {
         end -=begin;
@@ -159,31 +167,59 @@ class ofApp : public ofBaseApp{
         
     }
     
-
-    
-    ofTexture getResizedTexture(string path, int w, int h, ofImage mask, bool m = false){
-        string p = path;
+    void createSpeech(int s);
+    string latestFile;
+    ofTexture getResizedTexture(string path, int w, int h, ofImage mask, bool m = false, bool bw = true){
+        ofDisableArbTex();
         
-        if(!ofFile::doesFileExist(p))p.append(".png");
-        if(!ofFile::doesFileExist(p))p = path+".jpg";
-        if(!ofFile::doesFileExist(p))p = "blank.png";
-        
-        cout << p << endl;
         ofImage img;
 
+        int nw,nh;
         
-        img.load(p);
-        img.resize(h*(img.getWidth()/img.getHeight()),h);
+        img.load(path);
+        if(img.getWidth()<img.getHeight()){
+            nw = h;
+            nh = h*(img.getWidth()/img.getHeight());
+        }
+        else {
+            nw = h*(img.getWidth()/img.getHeight());
+            nh = h;
+        }
+        img.resize(nw,nh);
         
         ofTexture t;
-        t.allocate(h*(img.getWidth()/img.getHeight()),h,GL_RGBA);
+        t.allocate(nw,nh,GL_RGBA);
+        
         t = img.getTexture();
         
         if(m){
             mask.resize(w,h);
-            t.setAlphaMask(mask.getTexture());
+           // t.setAlphaMask(mask.getTexture());
         }
-        return t;
+        if(!bw)return t;
+        
+        ofEnableArbTex();
+        
+        ofFbo f;
+        
+        ofSetColor(255);
+        ofFill();
+        f.allocate(w,h, GL_RGBA);
+        ofShader s;
+        s.load("shader");
+        f.begin();
+        ofClear(0);
+        
+        s.begin();
+        s.setUniformTexture("tex", t, 0);
+        s.setUniformTexture("mask", mask.getTexture(), 1);
+        s.setUniform2f("res",w,h);
+        ofDrawRectangle(0,0,w,h);
+        s.end();
+        
+        f.end();
+        return f.getTexture();
+        
     }
     
     ofTexture getStringAsTexture(ofColor c, int w, int h, vector<string> l, ofTrueTypeFont f, int maxLines = 20){

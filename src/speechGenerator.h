@@ -14,8 +14,8 @@
 
 class SpeechGenerator{
 public:
-    ofTrueTypeFont tidSted_f,mat_f;
-    ofTrueTypeFont matb_f, number_f;
+    ofTrueTypeFont general_f,des_f;
+    ofTrueTypeFont speech_f, number_f;
     
     ofFile printNumberFile;
     int printNumber;
@@ -23,10 +23,12 @@ public:
     void setup(){
        // ofxSVG svg;
        // svg.load("bp_generator/boardingtemplate.svg");
-        tidSted_f.load("fonts/bourton/Bourton-Base.ttf",25);
-        mat_f.load("fonts/bourton/Bourton-Base-Drop.ttf",15);
-        matb_f.load("fonts/bourton/Bourton-Base-Drop.ttf",14);
-        number_f.load("fonts/bourton/Bourton-Base-Drop.ttf",20);
+        
+        
+        speech_f.load("fonts/bourton/Bourton-Base.ttf",24*2);
+        des_f.load("fonts/bourton/Bourton-Base-Drop.ttf",20*2);
+        general_f.load("fonts/bourton/Bourton-Base.ttf",16*2);
+        number_f.load("fonts/bourton/Bourton-Base.ttf",20*2);
         
        // rects = getPolyline(svg);
 	   /*
@@ -67,72 +69,77 @@ public:
         ofEnableAntiAliasing();
         
         ofImage bg;
-        bg.load("other/background-01.png");
+        bg.load("other/top.png");
         int w = bg.getWidth();
         int h = bg.getHeight();
         
-        float scale = 1.;
+        string theSpeech = "";
+        for(int u = 0; u<d.quotes.size();u++){
+            theSpeech.append(d.quotes[u].str + " ");
+        }
+        vector<string>speech = transformToCollumn(theSpeech, w*0.87, speech_f);
+        vector<string>description = transformToCollumn(d.description, w*0.87, des_f);
+        vector<string>source = transformToCollumn(d.source, w*0.87, des_f);
+        vector<string>general = transformToCollumn("Med biblioteket har du adgang til primærkilder til din opgave", w*0.87, general_f);
+        string src = "www.bib.ballerup.dk/e-materialer/britannica-original-sources";
+        cout << src<< endl;
+        vector<string>general2 = transformToCollumn("Find dem på Britannica Original Sources: "+src, w*0.87, general_f);
+        vector<int>align;
+        float scale = 3.;
+        align.push_back(61*scale+h); // 0 picture + space
+        align.push_back(24*scale+speech.size()*speech_f.getLineHeight()); //1 speech + space
+        align.push_back(32*scale+source.size()*des_f.getLineHeight()); // 2 source + space
+        align.push_back(31*scale+description.size()*des_f.getLineHeight()); //3 des + space
+        align.push_back(31*scale); // space , line
+        align.push_back(21*scale+general.size()*general_f.getLineHeight()); // general + spcae
+        align.push_back(40*scale+general2.size()*general_f.getLineHeight()); // general + space
+        align.push_back(61*scale); // bottom
+
+        int actualH = std::accumulate(align.rbegin(), align.rend(), 0);
+        
+        cout <<actualH<<endl;
+        
         
         ofFbo fbo; // for composing
         ofDisableArbTex();
-        fbo.allocate(w,h, GL_RGBA);
+        fbo.allocate(w,actualH, GL_RGBA);
         ofEnableArbTex();
         
         ofPixels pix;
         pix.allocate(w,h,GL_RGBA);
         
-        ofFbo fbores; // for final output
-        fbores.allocate(w,h,GL_RGBA);
-        
-       // shader.load("other/sharpen");
-        
- 
- 
+
         ofPushMatrix();
         fbo.begin();
         ofClear(255);
         ofBackground(255);
         
         bg.draw(0,0,w,h);
-        
-        
-        ofTranslate(0, 18);
-        int numL = 1;
-		d.face.draw(25, 10);
-		ofTranslate(0,d.face.getHeight());
-        
+        ofTranslate(0, align[0]);
         ofSetColor(0);
-        string strupper = ofToUpper(d.name);
-        tidSted_f.drawString(d.speaker, 25*scale, 50*scale);
-        drawCollumn(transformToCollumn(strupper, fbo.getWidth()-50*scale, tidSted_f), 25*scale, 90*scale, tidSted_f, 50);
         
-
-		string theSpeech = "";
-        for(int u = 0; u<d.quotes.size();u++){
-			theSpeech.append(d.quotes[u].str);
-        }
-		drawCollumn(transformToCollumn(theSpeech, fbo.getWidth()-50*scale, matb_f), 25 * scale, 210 * scale, matb_f, 50);
-
-        
-        ofSetColor(255);
-        string number = ofToString(writeToFile(),6,'0');
-        
-        number_f.drawString(number,fbo.getWidth()-115,27);
+        drawCollumn(speech, w/2, 0, speech_f);
+        ofTranslate(0, align[1]);
+        drawCollumn(source, w/2, 0, des_f);
+        ofTranslate(0, align[2]);
+        drawCollumn(description, w/2, 0, des_f);
+        ofTranslate(0, align[3]);
+        ofDrawLine(w/2-95*scale/2,0,w/2+95*scale/2,0);
+        ofTranslate(0, align[4]);
+        drawCollumn(general, w/2, 0, general_f);
+        ofTranslate(0, align[5]);
+        drawCollumn(general2, w/2, 0, general_f);
+        ofTranslate(0, align[6]);
+        vector<string> number ={ofToString(writeToFile(),6,'0')};
+        drawCollumn(number, w/2, 0, number_f);
         
         ofPopMatrix();
         fbo.end();
+
         
-        fbores.begin();
-        ofClear(255);
-        shader.begin();
-        
-        fbo.draw(0,0);
-        shader.end();
-        fbores.end();
-        
-        fbores.readToPixels(pix);
+        fbo.readToPixels(pix);
         ofSaveImage(pix, "generated/"+ofToString(current)+".png", OF_IMAGE_QUALITY_BEST);
-        return "latest.png";
+        return ofToString(current)+".png";
     }
         /*
     
@@ -176,17 +183,22 @@ public:
             }
         }
         result.push_back(appending);
+       
         return result;
     }
     
-    void drawCollumn(vector<string> s, int x, int y, ofTrueTypeFont f,int maxLine = 10 ){
+    void drawCollumn(vector<string> s, int x, int y, ofTrueTypeFont f,int maxLine = 10 , bool center = true){
         
-        if(maxLine<s.size()){
-            s[maxLine-1].pop_back();
-            s[maxLine-1].append("...");
+        if(s.size()>maxLine){
+    //        s[maxLine-1].pop_back();
+            s[MAX(maxLine-1,0)].append("...");
         }
         for(int i = 0; i < MIN(s.size(),maxLine); i++){
-            f.drawString(s[i], x, y+i*f.getLineHeight() );
+            int posx = x;
+            if(center){
+                posx = x-f.stringWidth(s[i])/2;
+            }
+            f.drawString(s[i], posx, y+i*f.getLineHeight() );
         }
     }
     bool isSpace(unsigned int c){
@@ -195,7 +207,7 @@ public:
         || c == 0x2002
         || c == 0x2003 || c == 0x2004 || c == 0x2005 || c == 0x2006 || c == 0x2007 || c == 0x2028
         || c == 0x2029
-        || c == 0x2008 || c == 0x2009 || c == 0x200A || c == 0x202F || c == 0x205F || c == 0x3000
+        || c == 0x2008 || c == 0x2009 || c == 0x200A || c == 0x202F || c == 0x205F || c == 0x3000 || c == '/'
         //    //https://en.wikipedia.org/wiki/Whitespace_character
         //    || c == 0x0009 //tab
         //    || c == 0x000A //line feed
