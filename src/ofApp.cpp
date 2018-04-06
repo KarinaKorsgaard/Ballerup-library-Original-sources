@@ -192,11 +192,17 @@ void ofApp::update(){
     if(input==SHUFFLE_BUTTON && chainEvent.getName()==EMPTY){
         randomizeSlots();
     }
-    if(input == 'a')slots[0].isLocked = !slots[0].isLocked;
-    if(input == 'b')slots[1].isLocked = !slots[1].isLocked;
-    if(input == 'c')slots[2].isLocked = !slots[2].isLocked;
-    if(input == 'd')slots[3].isLocked = !slots[3].isLocked;
-    if(input == 'e')slots[4].isLocked = !slots[4].isLocked;
+    if(input == 'a')slots[0].isLocked = true;
+    if(input == 'b')slots[1].isLocked = true;
+    if(input == 'c')slots[2].isLocked = true;
+    if(input == 'd')slots[3].isLocked = true;
+    if(input == 'e')slots[4].isLocked = true;
+    
+    if(input == 'f')slots[0].isLocked = false;
+    if(input == 'g')slots[1].isLocked = false;
+    if(input == 'h')slots[2].isLocked = false;
+    if(input == 'i')slots[3].isLocked = false;
+    if(input == 'j')slots[4].isLocked = false;
     
    
     for(int i = 0; i<slots.size();i++){
@@ -530,13 +536,17 @@ void ofApp::initialiseArdiono(){
     // arduino users check in arduino app....
     int baud = 9600;
 
+
+
+#ifdef __APPLE__
+    serial.setup(0, baud);
+#else
     for(int i = 0; i<deviceList.size();i++) {
         cout<<i<<": "<<deviceList[i].getDeviceName()<<endl;
         isInitialized = serial.isInitialized();
         if(!isInitialized)serial.setup(deviceList[i].getDeviceName(), baud);
     }
-
-
+#endif
 
     //serial.setup("COM4", baud); // windows example
     //serial.setup("/dev/tty.usbserial-1421", baud); // mac osx example
@@ -548,7 +558,9 @@ void ofApp::initialiseArdiono(){
     memset(bytesReadString, 0, 4);
     
     isInitialized = serial.isInitialized();
-    if(isInitialized)cout << "arduino is on"<<endl;
+    if(isInitialized){
+        cout << "arduino is on"<<endl;
+    }
 }
 void ofApp::readArduino(){
     
