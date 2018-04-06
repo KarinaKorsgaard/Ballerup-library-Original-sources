@@ -528,13 +528,15 @@ void ofApp::initialiseArdiono(){
     // (ie, COM4 on a pc, /dev/tty.... on linux, /dev/tty... on a mac)
     // arduino users check in arduino app....
     int baud = 9600;
-#ifdef __APPLE__
-    serial.setup(0, baud); //open the first device
-    cout << "on mac"<< endl;
-#else
-    serial.setup("COM3", baud); // windows example
-    cout << "on windows"<< endl;
-#endif
+
+    for(int i = 0; i<deviceList.size();i++) {
+        cout<<i<<": "<<deviceList[i].getDeviceName()<<endl;
+        isInitialized = serial.isInitialized();
+        if(!isInitialized)serial.setup(deviceList[i].getDeviceName(), baud);
+    }
+
+
+
     //serial.setup("COM4", baud); // windows example
     //serial.setup("/dev/tty.usbserial-1421", baud); // mac osx example
     //serial.setup("/dev/ttyUSB0", baud); //linux example
