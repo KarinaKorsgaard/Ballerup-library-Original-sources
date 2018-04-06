@@ -1,0 +1,277 @@
+﻿'win_original.exe' (Win32): Loaded 'C:\Users\Karina\Documents\of_v0.9.8_vs_release\apps\myApps\Ballerup_original_sources\bin\win_original.exe'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\ntdll.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\kernel32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\KernelBase.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\ucrtbase.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\vcruntime140.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\setupapi.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\msvcp140.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\msvcrt.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\opengl32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\cfgmgr32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\advapi32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\sechost.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\rpcrt4.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\user32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\user32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\user32.dll'
+'win_original.exe' (Win32): Loaded 'C:\Users\Karina\Documents\of_v0.9.8_vs_release\apps\myApps\Ballerup_original_sources\bin\FreeImage.dll'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\gdi32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\win32u.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\ws2_32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\gdi32full.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\vcomp120.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\shell32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\msvcp_win.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\SHCore.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\glu32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\combase.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\bcryptprimitives.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\windows.storage.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\shlwapi.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\kernel.appcore.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\powrprof.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\profapi.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\ole32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\crypt32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Users\Karina\Documents\of_v0.9.8_vs_release\apps\myApps\Ballerup_original_sources\bin\fmodex64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\winmm.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\msasn1.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\winmmbase.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\winmmbase.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\winmmbase.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\wsock32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\msacm32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\imm32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\uxtheme.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\dwmapi.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\msctf.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\oleaut32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atig6pxx.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atio6axx.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\version.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiadlxx.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\psapi.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\propsys.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\wtsapi32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\userenv.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\IPHLPAPI.DLL'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\devobj.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\wintrust.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atig6txx.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atig6txx.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atig6txx.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\dxgi.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\d3d11.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\ResourcePolicyClient.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\ResourcePolicyClient.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\aticfx64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiuxp64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiuxp64.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiuxp64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atidxx64.dll'. Cannot find or open the PDB file.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: utf8::not_enough_room at memory location 0x000000000014EC38.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+Exception thrown at 0x00007FFFC7384008 in win_original.exe: Microsoft C++ exception: boost::filesystem::filesystem_error at memory location 0x000000000014E380.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\TextInputFramework.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\CoreMessaging.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\CoreUIComponents.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\ntmarta.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\WinTypes.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\WinTypes.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\WinTypes.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\clbcatq.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\quartz.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\bcrypt.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\qedit.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\comdlg32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\msvfw32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_5.82.16299.309_none_8875ce284abe80d8\comctl32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_5.82.16299.309_none_8875ce284abe80d8\comctl32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_5.82.16299.309_none_8875ce284abe80d8\comctl32.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\WinSxS\amd64_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.16299.309_none_46bac7a9edf0e4df\GdiPlus.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\LAVSplitter.ax'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.16299.309_none_15cfd4c4935e6b11\comctl32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avformat-lav-58.dll'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avutil-lav-56.dll'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avcodec-lav-58.dll'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\secur32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\libbluray.dll'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avresample-lav-4.dll'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\sspicli.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\devenum.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\msdmo.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\LAVVideo.ax'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\d3d9.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\swscale-lav-5.dll'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avfilter-lav-7.dll'. Module was built without symbols.
+shell\shell32\shlnot.cpp(276)\SHELL32.dll!00007FFFC7684915: (caller: 00007FFFB0EE8653) LogHr(1) tid(508) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+shell\shell32\shlnot.cpp(277)\SHELL32.dll!00007FFFC7684899: (caller: 00007FFFB0EE8653) LogHr(2) tid(508) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+shell\shell32\shlnot.cpp(276)\SHELL32.dll!00007FFFC7684915: (caller: 00007FFFB0EE830F) LogHr(3) tid(508) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+shell\shell32\shlnot.cpp(277)\SHELL32.dll!00007FFFC7684899: (caller: 00007FFFB0EE830F) LogHr(4) tid(508) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+The thread 0x508 has exited with code 0 (0x0).
+'win_original.exe' (Win32): Loaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\DirectVobSub64\vsfilter.dll'. Module was built without symbols.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\oleacc.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\winspool.drv'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\wininet.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\ddraw.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\dciman32.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiu9p64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiu9p64.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiu9p64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiumd64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiumd6a.dll'. Cannot find or open the PDB file.
+The thread 0x1804 has exited with code 0 (0x0).
+The thread 0x644 has exited with code 0 (0x0).
+The thread 0x6e4 has exited with code 0 (0x0).
+The thread 0x2698 has exited with code 0 (0x0).
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiumd6a.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiumd64.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiu9p64.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiu9p64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiu9p64.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiu9p64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiumd64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiumd6a.dll'. Cannot find or open the PDB file.
+The thread 0x1f20 has exited with code 0 (0x0).
+The thread 0x13a4 has exited with code 0 (0x0).
+The thread 0x20c4 has exited with code 0 (0x0).
+The thread 0x28fc has exited with code 0 (0x0).
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiumd6a.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiumd64.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiu9p64.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiu9p64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiu9p64.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiu9p64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiumd64.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\atiumd6a.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\dxva2.dll'. Cannot find or open the PDB file.
+The thread 0x1d60 has exited with code 0 (0x0).
+The thread 0x268 has exited with code 0 (0x0).
+The thread 0x1704 has exited with code 0 (0x0).
+The thread 0x1404 has exited with code 0 (0x0).
+The thread 0x38c has exited with code 0 (0x0).
+The thread 0x28dc has exited with code 0 (0x0).
+The thread 0x245c has exited with code 0 (0x0).
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiumd6a.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiumd64.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiu9p64.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\dxva2.dll'
+The thread 0x1b68 has exited with code 0 (0x0).
+The thread 0x6e8 has exited with code 0 (0x0).
+The thread 0x23ec has exited with code 0 (0x0).
+The thread 0x29a0 has exited with code 0 (0x0).
+The thread 0x974 has exited with code 0 (0x0).
+The thread 0x262c has exited with code 0 (0x0).
+The thread 0x64 has exited with code 0 (0x0).
+The thread 0xe84 has exited with code 0 (0x0).
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atidxx64.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\atiuxp64.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\aticfx64.dll'
+The thread 0x2958 has exited with code 0 (0x0).
+The thread 0x25c4 has exited with code 0 (0x0).
+The thread 0x2bb8 has exited with code 0 (0x0).
+The thread 0x28f8 has exited with code 0 (0x0).
+The thread 0x24b4 has exited with code 0 (0x0).
+The thread 0x2bfc has exited with code 0 (0x0).
+The thread 0x1360 has exited with code 0 (0x0).
+shell\shell32\shlnot.cpp(276)\SHELL32.dll!00007FFFC7684915: (caller: 00007FFFB0EE8653) LogHr(5) tid(ffc) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+shell\shell32\shlnot.cpp(277)\SHELL32.dll!00007FFFC7684899: (caller: 00007FFFB0EE8653) LogHr(6) tid(ffc) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+shell\shell32\shlnot.cpp(276)\SHELL32.dll!00007FFFC7684915: (caller: 00007FFFB0EE830F) LogHr(7) tid(ffc) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+shell\shell32\shlnot.cpp(277)\SHELL32.dll!00007FFFC7684899: (caller: 00007FFFB0EE830F) LogHr(8) tid(ffc) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+The thread 0xffc has exited with code 0 (0x0).
+shell\shell32\shlnot.cpp(276)\SHELL32.dll!00007FFFC7684915: (caller: 00007FFFB12347F3) LogHr(9) tid(17b8) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+shell\shell32\shlnot.cpp(277)\SHELL32.dll!00007FFFC7684899: (caller: 00007FFFB12347F3) LogHr(10) tid(17b8) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+shell\shell32\shlnot.cpp(276)\SHELL32.dll!00007FFFC7684915: (caller: 00007FFFB123445F) LogHr(11) tid(17b8) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+shell\shell32\shlnot.cpp(277)\SHELL32.dll!00007FFFC7684899: (caller: 00007FFFB123445F) LogHr(12) tid(17b8) 80070578 Invalid window handle.
+    CallContext:[\ShellNotifyIcon] 
+The thread 0x17b8 has exited with code 0 (0x0).
+The thread 0xea8 has exited with code 0 (0x0).
+The thread 0x25c0 has exited with code 0 (0x0).
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\secur32.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\sspicli.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avformat-lav-58.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\libbluray.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\LAVSplitter.ax'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\msvfw32.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_5.82.16299.309_none_8875ce284abe80d8\comctl32.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\comdlg32.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\WinSxS\amd64_microsoft.windows.gdiplus_6595b64144ccf1df_1.1.16299.309_none_46bac7a9edf0e4df\GdiPlus.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\qedit.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\winspool.drv'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\oleacc.dll'
+'win_original.exe' (Win32): Loaded 'C:\Windows\System32\iertutil.dll'. Cannot find or open the PDB file.
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\iertutil.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\wininet.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\DirectVobSub64\vsfilter.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\devenum.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\dciman32.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\ddraw.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\quartz.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Windows\System32\d3d9.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avresample-lav-4.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avcodec-lav-58.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avutil-lav-56.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\swscale-lav-5.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\avfilter-lav-7.dll'
+'win_original.exe' (Win32): Unloaded 'C:\Program Files (x86)\K-Lite Codec Pack\Filters\LAV64\LAVVideo.ax'
+The thread 0x818 has exited with code 0 (0x0).
+The thread 0xd48 has exited with code 0 (0x0).
+The thread 0x220c has exited with code 0 (0x0).
+The thread 0x1264 has exited with code 0 (0x0).
+The thread 0x1fa0 has exited with code 0 (0x0).
+The thread 0x304 has exited with code 0 (0x0).
+The thread 0x2bbc has exited with code 0 (0x0).
+The thread 0x20e8 has exited with code 0 (0x0).
+The program '[11228] win_original.exe' has exited with code 0 (0x0).
