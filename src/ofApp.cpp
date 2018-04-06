@@ -83,8 +83,9 @@ void ofApp::setup(){
         string facejpg = face;
         if(!ofFile::doesFileExist(face))face.append(".png");
         if(!ofFile::doesFileExist(face))face = facejpg + ".jpg";
+		
         if(!ofFile::doesFileExist(face))face = "blank.png";
-        
+		if (face == "blank.png")cout <<"MISSING!!!:  faces" + slash + json["imageName"].asString() << endl;
         s->face = getResizedTexture(face,SLOT_H,SLOT_H,mask, true);
         s->source = json["source"].asString();
         s->description = json["description"].asString();
