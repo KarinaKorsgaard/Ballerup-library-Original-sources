@@ -541,7 +541,7 @@ void ofApp::initialiseArdiono(){
 #ifdef __APPLE__
     serial.setup(0, baud);
 #else
-    for(int i = 0; i<deviceList.size();i++) {
+    for(int i = deviceList.size()-1; i>0;i--) {
         cout<<i<<": "<<deviceList[i].getDeviceName()<<endl;
         isInitialized = serial.isInitialized();
         if(!isInitialized)serial.setup(deviceList[i].getDeviceName(), baud);
