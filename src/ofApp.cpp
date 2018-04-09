@@ -182,13 +182,9 @@ void ofApp::setup(){
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
+    if(!echo)echoArduino();
+    if(serial.isInitialized())readArduino();
     
-  // if(!debug) {
-		isInitialized = serial.isInitialized();
-		if(!isInitialized)initialiseArdiono();
-		else readArduino();
-  // }
-    //while play
     if(input==SHUFFLE_BUTTON && chainEvent.getName()==EMPTY){
         randomizeSlots();
     }
@@ -246,7 +242,7 @@ void ofApp::update(){
         ofSetColor(255);
         
         roundCircle.draw(SLOT_H/2-SLOT_H*imageScale/2, SLOT_H/2-SLOT_H*imageScale/2, SLOT_H*imageScale, SLOT_H*imageScale);
-        ofColor c = slots[i].isLocked ? ofColor::black : colors[slots[i].colorNumber];
+        ofColor c = slots[i].isLocked ? ofColor(0) : colors[slots[i].colorNumber];
         ofSetColor(c);
         roundCircle.draw(SLOT_H/2-SLOT_H*imageScale/2, SLOT_H/2-SLOT_H*imageScale/2, SLOT_H*imageScale, SLOT_H*imageScale);
         slots[i].fbo.end();
@@ -526,42 +522,27 @@ void ofApp::printSpeech(int s){
     }
 }
 
-//--------------------------------------------------------------
-void ofApp::initialiseArdiono(){
-    serial.listDevices();
-    vector <ofSerialDeviceInfo> deviceList = serial.getDeviceList();
+void ofApp::echoArduino() {
     
-    // this should be set to whatever com port your serial device is connected to.
-    // (ie, COM4 on a pc, /dev/tty.... on linux, /dev/tty... on a mac)
-    // arduino users check in arduino app....
-    int baud = 9600;
-
-
-
-#ifdef __APPLE__
-    serial.setup(0, baud);
-#else
-    for(int i = deviceList.size()-1; i>0;i--) {
-        cout<<i<<": "<<deviceList[i].getDeviceName()<<endl;
-        isInitialized = serial.isInitialized();
-        if(!isInitialized)serial.setup(deviceList[i].getDeviceName(), baud);
-    }
-#endif
-
-    //serial.setup("COM4", baud); // windows example
-    //serial.setup("/dev/tty.usbserial-1421", baud); // mac osx example
-    //serial.setup("/dev/ttyUSB0", baud); //linux example
-    
-    nTimesRead = 0;
-    nBytesRead = 0;
-    readTime = 0;
-    memset(bytesReadString, 0, 4);
-    
-    isInitialized = serial.isInitialized();
-    if(isInitialized){
-        cout << "arduino is on"<<endl;
+    echoTimer += ofGetLastFrameTime();
+    if(echoTimer>5. && !echo) {
+        serial.listDevices();
+        vector <ofSerialDeviceInfo> deviceList = serial.getDeviceList();
+        echoTimer = 0.0;
+        int baud = 9600;
+        serial.setup(deviceList[deviceCount%deviceList.size()].getDeviceName(), baud);
+        
+        nTimesRead = 0;
+        nBytesRead = 0;
+        readTime = 0;
+        memset(bytesReadString, 0, 4);
+        
+        if(serial.isInitialized())serial.writeByte('q');
+        deviceCount++;
+        cout<<"no echo"<<endl;
     }
 }
+
 void ofApp::readArduino(){
     
     int tempInput = -1;
@@ -586,6 +567,12 @@ void ofApp::readArduino(){
     readTime = ofGetElapsedTimef();
     
     string fromArduino = string(bytesReadString);
+    
+    if(fromArduino == "w") {
+        echo = true;
+        cout<< "arduino is on"<<endl;
+    }
+    
     char fa = fromArduino[0];
     tempInput = fa;
     

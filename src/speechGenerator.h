@@ -15,37 +15,19 @@
 class SpeechGenerator{
 public:
     ofTrueTypeFont general_f,des_f;
-    ofTrueTypeFont speech_f, number_f;
+    ofTrueTypeFont speech_f, number_f,headline_f;
     
     ofFile printNumberFile;
     int printNumber;
     
     void setup(){
-       // ofxSVG svg;
-       // svg.load("bp_generator/boardingtemplate.svg");
-        
-        
+
         speech_f.load("fonts/bourton/Bourton-Base.ttf",24*2);
+        headline_f.load("fonts/bourton/Bourton-Base.ttf",32*2);
         des_f.load("fonts/bourton/Bourton-Base-Drop.ttf",20*2);
         general_f.load("fonts/bourton/Bourton-Base.ttf",16*2);
         number_f.load("fonts/bourton/Bourton-Base.ttf",20*2);
         
-       // rects = getPolyline(svg);
-	   /*
-        shader.load("bp_generator/sharpen");
-        
-        layout["dest"] = rects[1];
-        layout["time"] = rects[2];
-        
-        layout["mat1"] = rects[3];
-        layout["mat2"] = rects[4];
-        layout["mat3"] = rects[5];
-        
-        
-        layout["matb1"] = rects[6];
-        layout["matb2"] = rects[7];
-        layout["matb3"] = rects[8];
-        */
         string newLine = "\r\n";
 #ifdef __APPLE__
         newLine = "\n";
@@ -78,27 +60,26 @@ public:
             theSpeech.append(d.quotes[u].str + " ");
         }
         vector<string>speech = transformToCollumn(theSpeech, w*0.87, speech_f);
+        vector<string>name = transformToCollumn(d.name, w*0.87, headline_f);
         vector<string>description = transformToCollumn(d.description, w*0.87, des_f);
         vector<string>source = transformToCollumn(d.source, w*0.87, des_f);
         vector<string>general = transformToCollumn("Med biblioteket har du adgang til primærkilder til din opgave", w*0.87, general_f);
         string src = "www.bib.ballerup.dk/e-materialer/britannica-original-sources";
-        cout << src<< endl;
+       // cout << src<< endl;
         vector<string>general2 = transformToCollumn("Find dem på Britannica Original Sources: "+src, w*0.87, general_f);
         vector<int>align;
         float scale = 3.;
         align.push_back(61*scale+h); // 0 picture + space
+        align.push_back(24*scale+name.size()*headline_f.getLineHeight()); //1 speech + space
         align.push_back(24*scale+speech.size()*speech_f.getLineHeight()); //1 speech + space
         align.push_back(32*scale+source.size()*des_f.getLineHeight()); // 2 source + space
         align.push_back(31*scale+description.size()*des_f.getLineHeight()); //3 des + space
         align.push_back(31*scale); // space , line
-        align.push_back(21*scale+general.size()*general_f.getLineHeight()); // general + spcae
+        align.push_back(31*scale+general.size()*general_f.getLineHeight()); // general + spcae
         align.push_back(40*scale+general2.size()*general_f.getLineHeight()); // general + space
         align.push_back(61*scale); // bottom
 
         int actualH = std::accumulate(align.rbegin(), align.rend(), 0);
-        
-        cout <<actualH<<endl;
-        
         
         ofFbo fbo; // for composing
         ofDisableArbTex();
@@ -117,20 +98,21 @@ public:
         bg.draw(0,0,w,h);
         ofTranslate(0, align[0]);
         ofSetColor(0);
-        
-        drawCollumn(speech, w/2, 0, speech_f);
+        drawCollumn(name, w/2, 0, headline_f);
         ofTranslate(0, align[1]);
-        drawCollumn(source, w/2, 0, des_f);
+        drawCollumn(speech, w/2, 0, speech_f);
         ofTranslate(0, align[2]);
-        drawCollumn(description, w/2, 0, des_f);
+        drawCollumn(source, w/2, 0, des_f);
         ofTranslate(0, align[3]);
-        ofDrawLine(w/2-95*scale/2,0,w/2+95*scale/2,0);
+        drawCollumn(description, w/2, 0, des_f);
         ofTranslate(0, align[4]);
-        drawCollumn(general, w/2, 0, general_f);
+        ofDrawLine(w/2-95*scale/2,0,w/2+95*scale/2,0);
         ofTranslate(0, align[5]);
-        drawCollumn(general2, w/2, 0, general_f);
+        drawCollumn(general, w/2, 0, general_f);
         ofTranslate(0, align[6]);
-        vector<string> number ={ofToString(writeToFile(),6,'0')};
+        drawCollumn(general2, w/2, 0, general_f);
+        ofTranslate(0, align[7]);
+        vector<string> number ={"#"+ofToString(writeToFile(),6,'0')};
         drawCollumn(number, w/2, 0, number_f);
         
         ofPopMatrix();

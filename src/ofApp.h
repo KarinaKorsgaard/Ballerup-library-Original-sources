@@ -148,9 +148,13 @@ class ofApp : public ofBaseApp{
     int            nBytesRead;                    // how much did we read?
     int            nTimesRead;                    // how many times did we read?
     float        readTime;                    // when did we last read?
-    bool isInitialized = false;
-    void initialiseArdiono();
+    
     void readArduino();
+    void echoArduino();
+    bool echo = false;
+    double echoTimer = 0.0;
+    int deviceCount = 0;
+    
     int input = 0;
     int p_input = 0; 
     ofSerial    serial;
@@ -182,7 +186,7 @@ SpeechGenerator sp;
             nh = h*(img.getWidth()/img.getHeight());
         }
         else {
-            nw = h*(img.getWidth()/img.getHeight());
+            nw = h*(img.getHeight()/img.getWidth());
             nh = h;
         }
         img.resize(nw,nh);
