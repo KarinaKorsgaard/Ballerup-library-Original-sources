@@ -530,7 +530,7 @@ void ofApp::echoArduino() {
         vector <ofSerialDeviceInfo> deviceList = serial.getDeviceList();
         echoTimer = 0.0;
         int baud = 9600;
-        serial.setup(deviceList[deviceCount%deviceList.size()].getDeviceName(), baud);
+        if(deviceList.size()>0)serial.setup(deviceList[deviceCount%deviceList.size()].getDeviceName(), baud);
         
         nTimesRead = 0;
         nBytesRead = 0;
