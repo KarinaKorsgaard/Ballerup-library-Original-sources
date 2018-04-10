@@ -23,10 +23,10 @@ public:
     void setup(){
 
         speech_f.load("fonts/bourton/Bourton-Base.ttf",26*2);
-        headline_f.load("fonts/bourton/Bourton-Base.ttf",32*2);
-        des_f.load("fonts/bourton/Bourton-Base-Drop.ttf",24*2);
-        general_f.load("fonts/bourton/Bourton-Base.ttf",22*2);
-        number_f.load("fonts/bourton/Bourton-Base.ttf",22*2);
+        headline_f.load("fonts/bourton/Bourton-Base.ttf",34*2);
+        des_f.load("fonts/bourton/Bourton-Base-Drop.ttf",23*2);
+        general_f.load("fonts/bourton/Bourton-Base.ttf",20*2);
+        number_f.load("fonts/bourton/Bourton-Base.ttf",20*2);
         
         string newLine = "\r\n";
 #ifdef __APPLE__
