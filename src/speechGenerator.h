@@ -84,6 +84,7 @@ public:
         ofFbo fbo; // for composing
         ofDisableArbTex();
         fbo.allocate(w,actualH, GL_RGBA);
+        
         ofEnableArbTex();
         
         ofPixels pix;
@@ -120,7 +121,10 @@ public:
 
         
         fbo.readToPixels(pix);
-        ofSaveImage(pix, "generated/"+ofToString(current)+".png", OF_IMAGE_QUALITY_BEST);
+        ofImage img;
+        img.setFromPixels(pix);
+        img.mirror(true,true);
+        ofSaveImage(img, "generated/"+ofToString(current)+".png", OF_IMAGE_QUALITY_BEST);
         return ofToString(current)+".png";
     }
         /*
