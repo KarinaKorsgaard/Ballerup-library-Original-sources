@@ -318,20 +318,25 @@ SpeechGenerator sp;
         bool exists = false;
      
         vector<bool>occupiedColors;
+        vector<int>occupiedColorInts;
         for(int i = 0; i<slots.size(); i++) occupiedColors.push_back(false);
 
         //does the speech of the slot new speech exist?
         for(int i = 0; i<slots.size(); i++) {
             if(slots[i].colorIsSet)occupiedColors[slots[i].currentColor] = true;
+        
             if(thisSpeech == slots[i].new_quote->speechID && s->slotId!=i && slots[i].colorIsSet) {
                 exists = true;
                 col = slots[i].currentColor;
             }
         }
         if(!exists) {
-            for(int i = 0; i<slots.size(); i++)
+            for(int i = 0; i<occupiedColors.size(); i++)
                 if(!occupiedColors[i])
-                    col = i;
+                    occupiedColorInts.push_back(i);
+            int randomColor = ofRandom(occupiedColorInts.size());
+            col = occupiedColorInts[randomColor];
+            
         }  
         return col;
     }
