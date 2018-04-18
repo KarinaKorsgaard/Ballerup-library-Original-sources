@@ -5,13 +5,14 @@ precision mediump float;
 uniform sampler2D tex;
 uniform sampler2D mask;
 uniform vec2 res;
+uniform vec2 res2;
 
 varying vec2 texCoordVarying;
 void main()
 {
     
     vec2 uv = gl_FragCoord.xy/res.xy;
-    vec4 color = texture2D(tex,uv);
+    vec4 color = texture2D(tex,gl_FragCoord.xy/res2.xy);
     vec4 mask = texture2D(mask,uv);
    // vec4 tex = texture2D(tex, res.xy/texCoordVarying);
    // float mask = texture2D(mask, texCoordVarying).r;

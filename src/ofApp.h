@@ -181,7 +181,8 @@ SpeechGenerator sp;
         int nw,nh;
         
         img.load(path);
-        if(img.getWidth()<img.getHeight()){
+
+        if(img.getWidth()>img.getHeight()){
             nw = h;
             nh = h*(img.getWidth()/img.getHeight());
         }
@@ -189,7 +190,7 @@ SpeechGenerator sp;
             nw = h*(img.getHeight()/img.getWidth());
             nh = h;
         }
-        img.resize(nw,nh);
+        // img.resize(nw,nh);
         
         ofTexture t;
         t.allocate(nw,nh,GL_RGBA);
@@ -197,7 +198,7 @@ SpeechGenerator sp;
         t = img.getTexture();
         
         if(m){
-            mask.resize(w,h);
+            mask.resize(h,h);
            // t.setAlphaMask(mask.getTexture());
         }
         if(!bw)return t;
@@ -208,7 +209,7 @@ SpeechGenerator sp;
         
         ofSetColor(255);
         ofFill();
-        f.allocate(w,h, GL_RGBA);
+        f.allocate(h,h, GL_RGBA);
         ofShader s;
         s.load("shader");
         f.begin();
@@ -217,8 +218,9 @@ SpeechGenerator sp;
         s.begin();
         s.setUniformTexture("tex", t, 0);
         s.setUniformTexture("mask", mask.getTexture(), 1);
-        s.setUniform2f("res",w,h);
-        ofDrawRectangle(0,0,w,h);
+        s.setUniform2f("res",h,h);
+		s.setUniform2f("res2", nh, nw);
+        ofDrawRectangle(0,0,h,h);
         s.end();
         
         f.end();
