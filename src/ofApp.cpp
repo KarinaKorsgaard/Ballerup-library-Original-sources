@@ -480,10 +480,13 @@ void ofApp::randomizeSlots(bool different){
             int temp = slots[i].quote->speechID;
             if(different)temp = slots[MAX(i-1,0)].quote->speechID;
             int random = temp;
+            
+            slot p_slot = slots[(i-1)%slots.size()];
+            if(ofRandom(1)>easiness && !different && p_slot.isLocked)random = p_slot.quote->speechID;
+
             while(temp == random){
                 random = ofRandom(speeches.size());
             }
-            if(ofRandom(1)>easiness && !different)random = i==0 ? slots.back().quote->speechID : slots[(i-1)%slots.size()].quote->speechID;
             slots[i].new_quote = &speeches[random].quotes[i];
             slots[i].colorIsSet = false;
             // slots[i].currentSpeech = random;

@@ -64,7 +64,7 @@ public:
         vector<string>description = transformToCollumn(d.description, w*0.87, des_f);
         vector<string>source = transformToCollumn(d.source, w*0.87, des_f);
         vector<string>general = transformToCollumn("Med biblioteket har du adgang til primærkilder til din opgave", w*0.87, general_f);
-        string src = "www.bib.ballerup.dk/e-materialer/britannica-original-sources";
+        string src = "www.bib.ballerup.dk/speechjackpot";
        // cout << src<< endl;
         vector<string>general2 = transformToCollumn("Find dem på Britannica Original Sources: "+src, w*0.87, general_f);
         vector<int>align;
@@ -73,8 +73,8 @@ public:
         align.push_back(24*scale+name.size()*headline_f.getLineHeight()); //1 speech + space
         align.push_back(24*scale+speech.size()*speech_f.getLineHeight()); //1 speech + space
         align.push_back(32*scale+source.size()*des_f.getLineHeight()); // 2 source + space
-        align.push_back(31*scale+description.size()*des_f.getLineHeight()); //3 des + space
-        align.push_back(31*scale); // space , line
+        align.push_back(41*scale+description.size()*des_f.getLineHeight()); //3 des + space
+        align.push_back(61*scale); // space , line
         align.push_back(31*scale+general.size()*general_f.getLineHeight()); // general + spcae
         align.push_back(40*scale+general2.size()*general_f.getLineHeight()); // general + space
         align.push_back(61*scale); // bottom
