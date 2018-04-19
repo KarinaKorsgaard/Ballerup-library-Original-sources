@@ -291,8 +291,9 @@ void ofApp::update(){
                 cout << "send stop"<< endl;
             }
 			//cout << "winning halt" << endl;
-            if(!debug)
-                createSpeech(slots[0].quote->speechID);
+            //if(!debug)
+            if(!speechCreated)createSpeech(slots[0].quote->speechID);
+			speechCreated = true;
             break;
         }
         case WINNING_ANIMATION: { // something something
@@ -300,6 +301,7 @@ void ofApp::update(){
             finalSpeech = transformToCollumn(speeches[slots[0].quote->speechID].source,1920/2.7 ,font);
             finalSpeech.push_back("");
             finalSpeech.push_back("Din gevinst bliver printet nu");
+			speechCreated = false;
             break;
         }
         case TRANSITION_OUT: {
@@ -507,6 +509,7 @@ void ofApp::randomizeSlots(bool different){
 }
 void ofApp::createSpeech(int s){
     latestFile = sp.generate(speeches[s], s);
+	cout << latestFile << endl;
 }
 //--------------------------------------------------------------
 void ofApp::printSpeech(int s){
@@ -522,7 +525,7 @@ void ofApp::printSpeech(int s){
         
 #else
         string command = cwd+"\\bin\\SumatraPDF.exe -print-to-default -print-settings \"fit\" "+ cwd +"\\bin\\data\\generated\\"+ file;
-        if(debug)cout << command <<" "<< cwd << endl;
+        cout << command <<" "<< cwd << endl;
         system(command.c_str());
         
 #endif

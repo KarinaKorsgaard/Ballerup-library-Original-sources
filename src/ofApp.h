@@ -150,7 +150,7 @@ class ofApp : public ofBaseApp{
     int            nBytesRead;                    // how much did we read?
     int            nTimesRead;                    // how many times did we read?
     float        readTime;                    // when did we last read?
-    
+	bool speechCreated = false;
     void readArduino();
     void echoArduino();
     bool echo = false;
