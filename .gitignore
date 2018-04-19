@@ -19,3 +19,4 @@ bin/sumatrapdfcache/*
 bin/data/printNumberFile.txt
 bin/data/generated/*
 bin/data/clearShortCut.lnk
+bin/data/settings.xml
