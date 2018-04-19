@@ -173,6 +173,10 @@ void ofApp::setup(){
     // gui.add(alphaTransitionTime.set("alphaTransitionTime",1.,100.,500.));
     gui.add(easiness.set("easiness",.2,0.,1.1));
     gui.add(jump.set("jump",1,1,speeches.size()));
+    
+    gui.add(alignHeight.set("height",0,0,400));
+    gui.add(alignSpace.set("space",0,0,1080));
+    
     gui.loadFromFile("settings.xml");
 }
 
@@ -182,7 +186,7 @@ void ofApp::setup(){
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
-    if(!echo)echoArduino();
+    echoArduino();
     if(serial.isInitialized())readArduino();
     
     if(input==SHUFFLE_BUTTON && chainEvent.getName()==EMPTY){
@@ -256,6 +260,7 @@ void ofApp::update(){
         if(same!=s) {
             same = -1;
         }
+        if(slots[i].isAnimated)same = -1;
     }
     if(same!=-1) {
         if(chainEvent.getName()==EMPTY){
@@ -361,9 +366,9 @@ void ofApp::draw(){
 	int h = slots[0].fbo.getHeight();
 	int spacingTop = 100;
 	int w_total = slots[0].fbo.getWidth();
-	float spacingH =(1080-spacingTop*2)/5;
+	float spacingH =alignSpace/4;
     ofPushMatrix();
-	ofTranslate((1920/2)-(w_total/2), spacingTop);
+	ofTranslate((1920/2)-(w_total/2), alignHeight);
 
     for(int i= 0; i<slots.size(); i++){
         int s = slots[i].quote->speechID;
@@ -481,7 +486,7 @@ void ofApp::randomizeSlots(bool different){
             if(different)temp = slots[MAX(i-1,0)].quote->speechID;
             int random = temp;
             
-            slot p_slot = slots[(i-1)%slots.size()];
+            slot p_slot = i == 0 ? slots.back() : slots[(i-1)];
             if(ofRandom(1)>easiness && !different && p_slot.isLocked)random = p_slot.quote->speechID;
 
             while(temp == random){
@@ -528,6 +533,11 @@ void ofApp::printSpeech(int s){
 void ofApp::echoArduino() {
     
     echoTimer += ofGetLastFrameTime();
+    if(echo && echoTimer > 30.){
+        if(serial.isInitialized())serial.writeByte('q');
+        echo = false;
+        echoTimer = 0.0;
+    }
     if(echoTimer>5. && !echo) {
         serial.listDevices();
         vector <ofSerialDeviceInfo> deviceList = serial.getDeviceList();
@@ -581,37 +591,18 @@ void ofApp::readArduino(){
     
     if(tempInput>-1 && tempInput!=0) {
         input = tempInput;
-        cout <<"From Arduino "<< input << endl;
-        /*if(p_input!=tempInput || tempInput == SHUFFLE_BUTTON){
-            p_input=tempInput;
-            input = tempInput;
-            cout <<"From Arduino "<< input << endl;
-        }
-         */
+        if(debug)cout <<"From Arduino "<< input << endl;
+        echoTimer = 0.0;
+        echo = true;
     }
-    
-    /*if(debug){
-        if(ofGetMouseX()>ofGetWidth()-300 && ofGetMouseY()<300){
-            int tempInput = SHUFFLE_BUTTON;
-            if(p_input!=tempInput){
-                p_input=tempInput;
-                input = tempInput;
-                cout <<"From Arduino "<< input << endl;
-            }
-        }
-        else{
-            int tempInput = 0;
-            if(p_input!=tempInput){
-                p_input=tempInput;
-                input = tempInput;
-                cout <<"From Arduino "<< input << endl;
-            }
-        }
-    }*/
+
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
+    if(key == 'q' && debug) {
+        vector<int>test;
+        cout << test[0] << endl;
+    }
     if(key == 'w'){
         for(int i = 0; i<slots.size();i++){
             slots[i].new_quote = &speeches[0].quotes[i];

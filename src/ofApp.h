@@ -134,9 +134,11 @@ class ofApp : public ofBaseApp{
     ofxPanel gui;
     ofParameter<float>animationTime;
     ofParameter<float>easiness;
+    ofParameter<float>alignHeight;
+    ofParameter<float>alignSpace;
     ofParameter<int>jump;
     ofParameter<float>alphaTransitionTime;
-
+    
     ChainEvent chainEvent;
     float transitionAlpha;
     
