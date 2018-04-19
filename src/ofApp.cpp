@@ -523,7 +523,7 @@ void ofApp::printSpeech(int s){
 #else
         string command = cwd+"\\bin\\SumatraPDF.exe -print-to-default -print-settings \"fit\" "+ cwd +"\\bin\\data\\generated\\"+ file;
         if(debug)cout << command <<" "<< cwd << endl;
-        if(!debug)system(command.c_str());
+        system(command.c_str());
         
 #endif
         printDone = true;
