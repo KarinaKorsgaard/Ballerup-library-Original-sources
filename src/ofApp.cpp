@@ -477,7 +477,7 @@ void ofApp::draw(){
     
 
     
-    if(debug)gui.draw();
+    if(showGui || debug)gui.draw();
 }
 
 //--------------------------------------------------------------
@@ -606,6 +606,8 @@ void ofApp::keyPressed(int key){
         vector<int>test;
         cout << test[0] << endl;
     }
+	if (key == 'g')showGui = !showGui;
+
     if(key == 'w'){
         for(int i = 0; i<slots.size();i++){
             slots[i].new_quote = &speeches[0].quotes[i];

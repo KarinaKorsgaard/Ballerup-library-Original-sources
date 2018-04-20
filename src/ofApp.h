@@ -110,6 +110,7 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		bool printDone = false;
     bool debug = true;
+	bool showGui = false;
     
     ofTrueTypeFont font;
     ofTrueTypeFont fontSmall;
