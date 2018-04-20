@@ -28,6 +28,9 @@ void ofApp::setup(){
     ofEnableAntiAliasing();
     ofEnableAlphaBlending();
     
+
+
+	ofHideCursor();
     
     
     
@@ -628,7 +631,11 @@ void ofApp::keyPressed(int key){
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
     if(debug && key == 'p'){printSpeech(0);printDone=false;}
-    if (key == 'd')debug = !debug;
+    if (key == 'd') {
+		debug = !debug;
+		if (debug)ofShowCursor();
+		else ofHideCursor();
+	}
 	ofSetFullscreen(!debug);
     
     
